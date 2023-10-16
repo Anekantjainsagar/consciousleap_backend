@@ -7,7 +7,7 @@ exports.validateSignUp = [
     .isEmpty()
     .isLength({ min: 8, max: 15 })
     .withMessage("Password must be in 8 to 15 characters"),
-  check("email").normalizeEmail().isEmail().withMessage("Invalid email"),
+  // check("email").normalizeEmail().isEmail().withMessage("Invalid email"),
 ];
 
 exports.userValidationResult = (req, res, next) => {
