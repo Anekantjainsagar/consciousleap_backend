@@ -5,6 +5,11 @@ const therapistSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  photo: {
+    type: String,
+    default:
+      "https://res.cloudinary.com/dfk09gblw/image/upload/v1697568033/wknzilhus8xoxd32h2zd.jpg",
+  },
   phone: {
     type: String,
     require: true,
@@ -38,6 +43,10 @@ const therapistSchema = new mongoose.Schema({
   qualifications: [String],
   speaks: [String],
   expertise: [String],
+  date: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 const Therapists = mongoose.model("Therapist", therapistSchema);

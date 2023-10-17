@@ -16,6 +16,7 @@ const {
 const {
   getAreaOfExpertise,
   getSpeaks,
+  getAllTherapists,
 } = require("../../controllers/therapists/filters");
 
 // Middlewares
@@ -30,9 +31,21 @@ const {
 } = require("../../middlewares/passwordReset");
 
 // Routes
+
+// Getting routes
 therapist.post("/get-therapist", validateSingin, getTherapist);
 therapist.post("/update-therapist", validateSingin, updateTherapist);
 
+// User visible routes
+
+// Filter routes
+therapist.get("/get-area-of-expertise", getAreaOfExpertise);
+therapist.get("/get-speaks", getSpeaks);
+
+// Getting all therapists
+therapist.get("/get-all-therapists", getAllTherapists);
+
+// Login signup routes
 therapist.post("/signup", validateSignUp, userValidationResult, signUp);
 
 therapist.use(
@@ -41,9 +54,6 @@ therapist.use(
   userValidationResult,
   sendMail
 );
-
-therapist.get("/get-area-of-expertise", getAreaOfExpertise);
-therapist.get("/get-speaks", getSpeaks);
 
 therapist.post("/password-reset", sendUrl);
 therapist.get("/password-reset/:id/:token", verifyUrl);

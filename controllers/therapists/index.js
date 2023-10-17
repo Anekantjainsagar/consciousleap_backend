@@ -4,7 +4,7 @@ const Therapist = require("../../model/therapistSchema");
 const jwt = require("jsonwebtoken");
 
 exports.signUp = async (req, res) => {
-  let { name, email, password, phone, displayName, desc } = req.body;
+  let { name, email, password, phone, displayName, desc, photo } = req.body;
 
   const salt = await bcrypt.genSalt(10);
   password = await bcrypt.hash(password, salt);
@@ -22,6 +22,7 @@ exports.signUp = async (req, res) => {
       phone,
       displayName,
       desc,
+      photo,
     });
     const jwtToken = jwt.sign(
       {
@@ -64,11 +65,22 @@ exports.updateTherapist = async (req, res) => {
     qualifications,
     speaks,
     about,
+    photo,
   } = req.body;
 
   const response = await Therapist.updateOne(
     { _id: id },
-    { name, desc, phone, experience, expertise, qualifications, speaks, about }
+    {
+      name,
+      desc,
+      phone,
+      experience,
+      expertise,
+      qualifications,
+      speaks,
+      about,
+      photo,
+    }
   );
   res.status(200).send(response);
 };
