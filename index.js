@@ -10,7 +10,11 @@ const therapist = require("./Routes/Therapist/therapist");
 
 connect();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://conscious-leap.vercel.app/", "http://localhost:3000"],
+  })
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
