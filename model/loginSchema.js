@@ -17,6 +17,17 @@ const loginSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  questionnaire: {
+    age: String,
+    problem: String,
+    answers: Array,
+    backendAnswers: [
+      {
+        value: Number,
+        text: String,
+      },
+    ],
+  },
 });
 
 const Login = mongoose.model("Users", loginSchema);

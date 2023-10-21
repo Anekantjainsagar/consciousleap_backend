@@ -7,6 +7,8 @@ const {
   signUp,
   getUser,
   updateUser,
+  updateQuestionnaire,
+  deleteQuestionnaire,
 } = require("../../controllers/Login/index");
 const { sendMail } = require("../../controllers/Login/otp");
 const {
@@ -29,6 +31,9 @@ const {
 // Routes
 login.post("/get-user", validateSingin, getUser);
 login.post("/update-user", validateSingin, updateUser);
+
+login.post("/delete-questionnaire", validateSingin, deleteQuestionnaire);
+login.post("/update-questionnaire", validateSingin, updateQuestionnaire);
 
 login.post("/signup", validateSignUp, userValidationResult, signUp);
 login.post("/signin", signInUser);
