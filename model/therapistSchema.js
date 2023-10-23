@@ -47,6 +47,11 @@ const therapistSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  meeting_url: {
+    type: String,
+    default:
+      "https://colecowellbeingopcpvtltd.zohobookings.in/#/customer/sagrikaa",
+  },
   reviews: [
     {
       user: String,

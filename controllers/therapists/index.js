@@ -66,6 +66,7 @@ exports.updateTherapist = async (req, res) => {
     speaks,
     about,
     photo,
+    meeting_url,
   } = req.body;
 
   const response = await Therapist.updateOne(
@@ -80,6 +81,7 @@ exports.updateTherapist = async (req, res) => {
       speaks,
       about,
       photo,
+      meeting_url,
     }
   );
   res.status(200).send(response);
