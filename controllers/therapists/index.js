@@ -84,3 +84,24 @@ exports.updateTherapist = async (req, res) => {
   );
   res.status(200).send(response);
 };
+
+exports.reviewTherapist = async (req, res) => {
+  const { id } = req;
+  const { positivenss, knowledgable, comfortability, experience, therapistId } =
+    req.body;
+
+  let review = {
+    user: id,
+    positivenss,
+    knowledgable,
+    comfortability,
+    experience,
+  };
+
+  let response = await Therapist.updateOne(
+    { _id: therapistId },
+    { $push: { reviews: review } }
+  );
+
+  res.status(200).send(response);
+};

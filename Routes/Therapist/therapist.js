@@ -6,6 +6,7 @@ const {
   signUp,
   getTherapist,
   updateTherapist,
+  reviewTherapist,
 } = require("../../controllers/therapists/index");
 const { sendMail } = require("../../controllers/therapists/otp");
 const {
@@ -36,14 +37,13 @@ const {
 therapist.post("/get-therapist", validateSingin, getTherapist);
 therapist.post("/update-therapist", validateSingin, updateTherapist);
 
-// User visible routes
-
 // Filter routes
 therapist.get("/get-area-of-expertise", getAreaOfExpertise);
 therapist.get("/get-speaks", getSpeaks);
 
 // Getting all therapists
 therapist.get("/get-all-therapists", getAllTherapists);
+therapist.post(`/review`, validateSingin, reviewTherapist);
 
 // Login signup routes
 therapist.post("/signup", validateSignUp, userValidationResult, signUp);

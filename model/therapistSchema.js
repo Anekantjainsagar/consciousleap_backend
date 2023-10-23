@@ -47,6 +47,15 @@ const therapistSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  reviews: [
+    {
+      user: String,
+      positivenss: String,
+      knowledgable: String,
+      comfortability: String,
+      experience: String,
+    },
+  ],
 });
 
 const Therapists = mongoose.model("Therapist", therapistSchema);
