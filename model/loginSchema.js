@@ -28,6 +28,17 @@ const loginSchema = new mongoose.Schema({
       },
     ],
   },
+  thoughts: String,
+  thingsMyself: {
+    selfCare: String,
+    thingsMyself: String,
+    thingsPast: String,
+  },
+  gratitude: {
+    gratefulFor: String,
+    proud: String,
+    tomorrow: String,
+  },
 });
 
 const Login = mongoose.model("Users", loginSchema);
