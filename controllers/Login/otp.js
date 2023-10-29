@@ -36,7 +36,12 @@ exports.sendMail = async (req, res) => {
         .send(
           "service_jdcafm3",
           "template_76co9rr",
-          { email: email, otp: otp },
+          {
+            email: email,
+            otp: otp,
+            name: "Anekant",
+            from_name: "Consciousleap",
+          },
           "ud6oI9829OBeCMz6O"
         )
         .then(
