@@ -32,27 +32,6 @@ exports.sendMail = async (req, res) => {
         subject: "Verify you login",
         html: `<p>Hello user,</p><p>Thank you for choosing consciousleap, Use this OTP to complete your Sign Up procedure and verify your account on consciousleap </p><p>Remember, Never share this OTP with anyone, not even if Tap Karo asks you..</p><p>${otp}</p><p>Regards,</p><p>Team consciousleap</p>`,
       });
-      emailjs
-        .send(
-          "service_jdcafm3",
-          "template_76co9rr",
-          {
-            email: email,
-            otp: otp,
-            name: "Anekant",
-            from_name: "Consciousleap",
-          },
-          "ud6oI9829OBeCMz6O"
-        )
-        .then(
-          function (response) {
-            console.log("SUCCESS!", response.status, response.text);
-          },
-          function (error) {
-            console.log("FAILED...", error);
-          }
-        );
-
       if (
         result.accepted.includes(email) ||
         result.accepted.includes(modifiedMail)
