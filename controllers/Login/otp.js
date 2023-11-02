@@ -19,6 +19,7 @@ exports.sendMail = async (req, res) => {
         digits: true,
         lowerCaseAlphabets: false,
       });
+      
       res.status(200).send({
         data: "OTP sended successfully via Email. If not receiving email check spam folder",
         otp: otp,
