@@ -9,6 +9,7 @@ exports.sendUrl = async (req, res) => {
   const modifiedMail = email.toLowerCase();
 
   let data = await Login.findOne({ email: modifiedMail });
+  console.log(data);
   if (data) {
     const jwtToken = jwt.sign(
       {
@@ -22,6 +23,7 @@ exports.sendUrl = async (req, res) => {
     const uri = `${"https://consciousleap.co"}/user/password-reset/${
       data._id
     }/${jwtToken}`;
+    console.log(url);
 
     res.status(200).send({
       data: "Password reset link sent to your email account. If not received check spam folder once.",
