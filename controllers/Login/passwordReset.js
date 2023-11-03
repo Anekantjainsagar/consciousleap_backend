@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 
 exports.sendUrl = async (req, res) => {
   const email = req.body.email;
+  console.log(req.body);
   const modifiedMail = email.toLowerCase();
 
   let data = await Login.findOne({ email: modifiedMail });

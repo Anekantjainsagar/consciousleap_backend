@@ -28,6 +28,16 @@ const {
   passswordValidationResult,
 } = require("../../middlewares/passwordReset");
 
+// Password reset
+login.post("/password-reset", sendUrl);
+login.get("/password-reset/:id/:token", verifyUrl);
+login.post(
+  "/password-reset/reset/:id/:token",
+  passswordValidate,
+  passswordValidationResult,
+  resetPassword
+);
+
 // Routes
 login.post("/get-user", validateSingin, getUser);
 login.post("/update-user", validateSingin, updateUser);
@@ -39,14 +49,5 @@ login.post("/signup", validateSignUp, userValidationResult, signUp);
 login.post("/signin", signInUser);
 
 login.use("/otp-verification", validateSignUp, userValidationResult, sendMail);
-
-login.post("/password-reset", sendUrl);
-login.get("/password-reset/:id/:token", verifyUrl);
-login.post(
-  "/password-reset/reset/:id/:token",
-  passswordValidate,
-  passswordValidationResult,
-  resetPassword
-);
 
 module.exports = login;
