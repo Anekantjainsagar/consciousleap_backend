@@ -23,7 +23,7 @@ exports.sendUrl = async (req, res) => {
     const uri = `${"https://consciousleap.co"}/user/password-reset/${
       data._id
     }/${jwtToken}`;
-    console.log(url);
+    console.log(uri);
 
     res.status(200).send({
       data: "Password reset link sent to your email account. If not received check spam folder once.",
