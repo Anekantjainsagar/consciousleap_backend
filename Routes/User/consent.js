@@ -2,9 +2,12 @@ const express = require("express");
 const consent = express.Router();
 const Consent = require("../../model/consentForm");
 const Login = require("../../model/loginSchema");
+const { validateSingin } = require("../../middlewares/auth");
 
-consent.post("/", async (req, res) => {
-  const { name, emergency, address, id } = req.body;
+consent.post("/", validateSingin, async (req, res) => {
+  const { name, emergency, address } = req.body;
+
+  const { id } = req;
 
   let data = await Login.findOne({ _id: id });
 
