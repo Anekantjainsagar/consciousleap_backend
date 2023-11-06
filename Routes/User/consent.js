@@ -16,8 +16,9 @@ consent.post("/check", validateSingin, async (req, res) => {
   }
 });
 
-consent.post("/", async (req, res) => {
+consent.post("/", validateSignin, async (req, res) => {
   const { name, emergency, address } = req.body;
+  let { id } = req;
 
   const consent = Consent({ name, address, emergency, userId: id });
   consent
