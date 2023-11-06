@@ -7,7 +7,7 @@ const { validateSingin } = require("../../middlewares/auth");
 consent.post("/check", validateSingin, async (req, res) => {
   const { id } = req;
 
-  let data = await Login.findOne({ _id: id });
+  let data = await Consent.findOne({ userId: id });
 
   if (data) {
     res.send(true);
@@ -16,26 +16,18 @@ consent.post("/check", validateSingin, async (req, res) => {
   }
 });
 
-consent.post("/", validateSingin, async (req, res) => {
+consent.post("/", async (req, res) => {
   const { name, emergency, address } = req.body;
 
-  const { id } = req;
-
-  let data = await Login.findOne({ _id: id });
-
-  if (data) {
-    res.send("Already filled");
-  } else {
-    const consent = Consent({ name, address, emergency, userId: id });
-    consent
-      .save()
-      .then((response) => {
-        res.status(200).send(response);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
-  }
+  const consent = Consent({ name, address, emergency, userId: id });
+  consent
+    .save()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
 module.exports = consent;
