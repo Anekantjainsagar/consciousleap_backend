@@ -9,6 +9,8 @@ consent.post("/check", validateSingin, async (req, res) => {
 
   let data = await Consent.findOne({ userId: id });
 
+  console.log(data);
+
   if (data) {
     res.send(true);
   } else {
