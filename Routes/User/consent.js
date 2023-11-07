@@ -20,6 +20,8 @@ consent.post("/", validateSingin, async (req, res) => {
   const { name, emergency, address } = req.body;
   let { id } = req;
 
+  console.log(id)
+
   const consent = Consent({ name, address, emergency, userId: id });
   console.log(consent);
   consent
