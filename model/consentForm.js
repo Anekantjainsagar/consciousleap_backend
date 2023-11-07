@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const consentSchema = new mongoose.Schema({
-  userId: String,
   name: String,
   address: String,
+  userId: String,
   emergency: {
     name: String,
     phone: String,
