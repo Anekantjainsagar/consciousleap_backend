@@ -7,9 +7,10 @@ const { validateSingin } = require("../../middlewares/auth");
 consent.post("/check", validateSingin, async (req, res) => {
   const { id } = req;
 
+  console.log(id);
   let data = await Consent.findOne({ userId: id });
 
-  console.log(data);
+  console.log(id + data);
 
   if (data) {
     res.send(true);
