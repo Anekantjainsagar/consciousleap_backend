@@ -5,7 +5,7 @@ const Login = require("../../model/loginSchema");
 const { validateSingin } = require("../../middlewares/auth");
 
 consent.post("/check", validateSingin, async (req, res) => {
-  const { id } = req.body;
+  const { id } = req;
 
   let data = await Consent.findOne({ userId: id });
 
@@ -17,7 +17,8 @@ consent.post("/check", validateSingin, async (req, res) => {
 });
 
 consent.post("/", validateSingin, async (req, res) => {
-  const { name, emergency, address, id } = req.body;
+  const { name, emergency, address } = req.body;
+  let { id } = req;
 
   const consent = Consent({ name, address, emergency, userId: id });
   console.log(consent);
