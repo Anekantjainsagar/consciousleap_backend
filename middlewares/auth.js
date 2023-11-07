@@ -7,6 +7,7 @@ exports.validateSingin = (req, res, next) => {
       console.log(token);
       if (!token) {
         res.status(404).json({ success: false, data: "Cookie not found" });
+        next();
       } else {
         jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
           if (err) {
@@ -14,6 +15,7 @@ exports.validateSingin = (req, res, next) => {
           }
           console.log(user);
           req.id = user?.user;
+          next();
         });
       }
     }
