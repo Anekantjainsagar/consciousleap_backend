@@ -45,7 +45,7 @@ exports.getAllTherapists = async (req, res) => {
     query.name = { $regex: search, $options: "i" };
   }
 
-  let therapists = await Therapists.find(query);
+  let therapists = await Therapists.find(query).sort({ name: 1 });
 
   res.send(therapists);
 };
