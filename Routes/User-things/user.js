@@ -4,6 +4,19 @@ const user = express.Router();
 const { validateSingin } = require("../../middlewares/auth");
 const Login = require("../../model/loginSchema");
 
+user.post("/subscribe", (req, res) => {
+  const user = Subscribe({ email: req.body.email });
+
+  user
+    .save()
+    .then((response) => {
+      res.send(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 user.post("/thoughts", validateSingin, async (req, res) => {
   const { thoughts } = req.body;
   const { id } = req;
