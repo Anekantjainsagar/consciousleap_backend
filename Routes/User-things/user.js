@@ -3,7 +3,7 @@ const user = express.Router();
 
 const { validateSingin } = require("../../middlewares/auth");
 const Login = require("../../model/loginSchema");
-const Subsribe = require("../../model/subscribeForm");
+const Subscribe = require("../../model/subscribeForm");
 
 user.post("/subscribe", (req, res) => {
   const user = Subscribe({ email: req.body.email });
