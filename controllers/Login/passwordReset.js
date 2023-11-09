@@ -9,7 +9,6 @@ exports.sendUrl = async (req, res) => {
   const modifiedMail = email.toLowerCase();
 
   let data = await Login.findOne({ email: modifiedMail });
-  console.log(data);
   if (data) {
     const jwtToken = jwt.sign(
       {
