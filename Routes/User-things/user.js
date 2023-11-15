@@ -4,6 +4,8 @@ const user = express.Router();
 const { validateSingin } = require("../../middlewares/auth");
 const Login = require("../../model/loginSchema");
 const Subscribe = require("../../model/subscribeForm");
+const Partners = require("../../model/partnerShip");
+const Bussiness = require("../../model/bussinessForm");
 
 user.post("/subscribe", (req, res) => {
   const user = Subscribe({ email: req.body.email });
@@ -12,6 +14,52 @@ user.post("/subscribe", (req, res) => {
     .save()
     .then((response) => {
       res.send(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+user.post("/partners", async (req, res) => {
+  const { name, company, email, phone, message } = req.body;
+
+  const partners = Partners({ name, company, email, phone, message });
+  partners
+    .save()
+    .then((resp) => {
+      res.send(resp);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+user.post("/bussiness", async (req, res) => {
+  const {
+    name,
+    phone,
+    company,
+    noOfEmployees,
+    workEmail,
+    industry,
+    country,
+    about,
+  } = req.body;
+
+  const partners = Bussiness({
+    name,
+    phone,
+    company,
+    noOfEmployees,
+    workEmail,
+    industry,
+    country,
+    about,
+  });
+  partners
+    .save()
+    .then((resp) => {
+      res.send(resp);
     })
     .catch((err) => {
       console.log(err);
