@@ -100,4 +100,46 @@ therapist.post("/note", validateSingin, async (req, res) => {
   res.status(200).send(response);
 });
 
+therapist.post("/note/edit", validateSingin, async (req, res) => {
+  const { id } = req;
+  const {
+    note_id,
+    name,
+    age,
+    date,
+    occupation,
+    gender,
+    relationship,
+    session,
+    complaints,
+    notes,
+    homework,
+  } = req.body;
+
+  let updatedNote = {
+    name,
+    age,
+    date,
+    occupation,
+    gender,
+    relationship,
+    session,
+    complaints,
+    notes,
+    homework,
+  };
+
+  const therapist = await Therapists.findById(id);
+  const noteIndex = therapist.notes.findIndex((note) => note._id == note_id);
+
+  if (noteIndex !== -1) {
+    therapist.notes[noteIndex] = updatedNote;
+    await therapist.save();
+
+    res.status(200).send("Note updated successfully.");
+  } else {
+    res.status(404).send("Note not found.");
+  }
+});
+
 module.exports = therapist;
