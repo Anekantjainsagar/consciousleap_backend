@@ -78,6 +78,25 @@ const therapistSchema = new mongoose.Schema({
       experience: String,
     },
   ],
+  notes: [
+    {
+      name: String,
+      age: String,
+      date: String,
+      occupation: String,
+      gender: String,
+      relationship: String,
+      session: String,
+      complaints: {
+        complaint1: String,
+        complaint2: String,
+        complaint3: String,
+        complaint4: String,
+      },
+      notes: String,
+      homework: String,
+    },
+  ],
 });
 
 const Therapists = mongoose.model("Therapist", therapistSchema);

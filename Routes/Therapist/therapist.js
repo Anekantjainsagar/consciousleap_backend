@@ -1,5 +1,6 @@
 const express = require("express");
 const therapist = express.Router();
+const Therapists = require("../../model/therapistSchema");
 
 // Controllers
 const {
@@ -63,5 +64,40 @@ therapist.post(
   passswordValidationResult,
   resetPassword
 );
+
+therapist.post("/note", validateSingin, async (req, res) => {
+  const { id } = req;
+  const {
+    name,
+    age,
+    date,
+    occupation,
+    gender,
+    relationship,
+    session,
+    complaints,
+    notes,
+    homework,
+  } = req.body;
+
+  let note = {
+    name,
+    age,
+    date,
+    occupation,
+    gender,
+    relationship,
+    session,
+    complaints,
+    notes,
+    homework,
+  };
+
+  const response = await Therapists.updateOne(
+    { _id: id },
+    { $push: { notes: note } }
+  );
+  res.status(200).send(response);
+});
 
 module.exports = therapist;
