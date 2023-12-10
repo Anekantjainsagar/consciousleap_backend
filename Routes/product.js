@@ -15,7 +15,7 @@ product.post("/add", (req, res) => {
     description,
     rating,
   } = req.body;
-
+  console.log(req.body);
   const product = Products({
     name,
     size,
@@ -28,7 +28,7 @@ product.post("/add", (req, res) => {
     description,
     rating,
   });
-
+  console.log(product);
   product
     .save()
     .then((response) => {
