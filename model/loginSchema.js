@@ -39,6 +39,17 @@ const loginSchema = new mongoose.Schema({
     proud: String,
     tomorrow: String,
   },
+  addresses: [
+    {
+      address: String,
+      postal: String,
+      city: String,
+      state: String,
+      country: String,
+      phone: String,
+    },
+  ],
+  wishlist: Array,
 });
 
 const Login = mongoose.model("Users", loginSchema);

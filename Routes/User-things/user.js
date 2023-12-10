@@ -94,4 +94,15 @@ user.post("/gratitude", validateSingin, async (req, res) => {
   res.status(200).send(response);
 });
 
+user.post("/add-address", validateSingin, async (req, res) => {
+  const { address } = req.body;
+  const { id } = req;
+
+  const response = await Login.updateOne(
+    { _id: id },
+    { $push: { addresses: address } }
+  );
+  res.status(200).send(response);
+});
+
 module.exports = user;
