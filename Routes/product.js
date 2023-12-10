@@ -15,7 +15,7 @@ product.post("/add", (req, res) => {
     description,
     rating,
   } = req.body;
-  console.log(req.body);
+
   const product = Products({
     name,
     size,
@@ -28,7 +28,6 @@ product.post("/add", (req, res) => {
     description,
     rating,
   });
-  console.log(product);
   product
     .save()
     .then((response) => {
@@ -46,7 +45,7 @@ product.post("/get/:id", async (req, res) => {
   res.status(200).send(data);
 });
 
-product.get("/get-all", async (req, res) => {
+product.post("/get-all", async (req, res) => {
   let search = req.query.search;
 
   let query = {};
