@@ -46,7 +46,7 @@ product.post("/get/:id", async (req, res) => {
 });
 
 product.post("/get-all", async (req, res) => {
-  let search = req.query.search;
+  let search = req.body.search;
 
   let query = {};
   if (search?.length > 0) {
