@@ -11,8 +11,8 @@ const user = require("./Routes/User-things/user");
 const consent = require("./Routes/User/consent");
 const product = require("./Routes/product");
 
-const https = require("https");
-const fs = require("fs");
+// const https = require("https");
+// const fs = require("fs");
 
 connect();
 
@@ -21,12 +21,12 @@ app.use(express.json());
 
 const port = process.env.PORT || 5000;
 // Load SSL certificate and private key
-const options = {
-  key: fs.readFileSync("/home/ec2-user/ssl/privkey1.pem"),
-  cert: fs.readFileSync("/home/ec2-user/ssl/fullchain1.pem"),
-};
+// const options = {
+//   key: fs.readFileSync("/home/ec2-user/ssl/privkey1.pem"),
+//   cert: fs.readFileSync("/home/ec2-user/ssl/fullchain1.pem"),
+// };
 
-const httpsServer = https.createServer(options, app);
+// const httpsServer = https.createServer(options, app);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
@@ -38,6 +38,6 @@ app.use("/api/product", product);
 app.use("/api/consent", consent);
 app.use("/api/therapist", therapist);
 
-httpsServer.listen(port, () => {
+app.listen(port, () => {
   console.log(`App is listening on port ${process.env.PORT}`);
 });
