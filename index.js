@@ -22,8 +22,8 @@ app.use(express.json());
 const port = process.env.PORT || 5000;
 // Load SSL certificate and private key
 const options = {
-  key: fs.readFileSync("/home/ubuntu/ssl/privkey1.pem"),
-  cert: fs.readFileSync("/home/ubuntu/ssl/fullchain1.pem"),
+  key: fs.readFileSync("/home/ec2-user/ssl/privkey1.pem"),
+  cert: fs.readFileSync("/home/ec2-user/ssl/fullchain1.pem"),
 };
 
 const httpsServer = https.createServer(options, app);
