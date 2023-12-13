@@ -6,6 +6,11 @@ const Login = require("../../model/loginSchema");
 const Subscribe = require("../../model/subscribeForm");
 const Partners = require("../../model/partnerShip");
 const Bussiness = require("../../model/bussinessForm");
+const Orders = require("../../model/orderSchema");
+
+const stripe = require("stripe")(
+  "sk_test_51NItdrSDHBoNQbmebZ9lSZwej7XFgGqhvaeaIALMcOv4c7SiVh8arQrmU82c7Q9D6Dtxg2DyZ1bpgG2L0PRv00QF00NP0MQFgO"
+);
 
 user.post("/subscribe", (req, res) => {
   const user = Subscribe({ email: req.body.email });
@@ -103,6 +108,44 @@ user.post("/add-address", validateSingin, async (req, res) => {
     { $push: { addresses: address } }
   );
   res.status(200).send(response);
+});
+
+user.post("/order", validateSingin, async (req, res) => {
+  const { id } = req;
+  const { cart, order } = req.body;
+
+  const orderItem = Orders({
+    user: id,
+    products: cart,
+    localPickup: order?.localPickup,
+    address: order?.address,
+    additional: order?.additional,
+  });
+
+  const lineItmes = cart?.map((e) => ({
+    price_data: {
+      currency: "inr",
+      product_data: {
+        name: e?.name,
+      },
+      unit_amount: e?.price * 100 + e?.price * 18,
+    },
+    quantity: e?.quantity,
+  }));
+
+  const session = await stripe.checkout.sessions.create({
+    payment_methods_types: ["card"],
+    mode: "payment",
+    line_items: lineItmes,
+    success_url: "https://consciousleap.co/cart",
+    cancel_url: "https://consciousleap.co/cart",
+  });
+
+  orderItem.save().then((response) => {
+    console.log(response);
+  });
+
+  res.json({ id: session.id });
 });
 
 module.exports = user;
