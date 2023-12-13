@@ -14,6 +14,10 @@ const orderSchema = new mongoose.Schema({
     phone: String,
   },
   mode: String,
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const Orders = mongoose.model("Orders", orderSchema);

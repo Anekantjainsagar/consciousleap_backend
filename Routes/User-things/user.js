@@ -138,15 +138,15 @@ user.post("/order", validateSingin, async (req, res) => {
     payment_method_types: ["card"],
     mode: "payment",
     line_items: lineItmes,
-    success_url: "https://consciousleap.co/cart",
-    cancel_url: "https://consciousleap.co/cart",
+    success_url: "https://consciousleap.co/cart/5",
+    cancel_url: "https://consciousleap.co/cart/4",
   });
 
   orderItem.save().then((response) => {
     console.log(response);
   });
 
-  res.json({ id: session.id });
+  res.json({ id: session.id, orderItem });
 });
 
 module.exports = user;
