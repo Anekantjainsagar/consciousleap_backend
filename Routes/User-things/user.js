@@ -138,7 +138,7 @@ user.post("/order", validateSingin, async (req, res) => {
     payment_method_types: ["card"],
     mode: "payment",
     line_items: lineItmes,
-    success_url: "https://consciousleap.co/cart/5",
+    success_url: `https://consciousleap.co/cart/5/${orderItem?._id}`,
     cancel_url: "https://consciousleap.co/cart/4",
   });
 
@@ -147,6 +147,13 @@ user.post("/order", validateSingin, async (req, res) => {
   });
 
   res.json({ id: session.id, orderItem });
+});
+
+user.post("/get_order", async (req, res) => {
+  const { id } = req.body;
+
+  const data = await Orders.findOne({ _id: id });
+  res.send(data);
 });
 
 module.exports = user;
