@@ -134,7 +134,7 @@ user.post("/order", validateSingin, async (req, res) => {
   }));
 
   const session = await stripe.checkout.sessions.create({
-    payment_methods_types: ["card"],
+    payment_method_types: ["card"],
     mode: "payment",
     line_items: lineItmes,
     success_url: "https://consciousleap.co/cart",
