@@ -13,6 +13,7 @@ const orderSchema = new mongoose.Schema({
     country: String,
     phone: String,
   },
+  mode: String,
 });
 
 const Orders = mongoose.model("Orders", orderSchema);

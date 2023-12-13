@@ -112,7 +112,7 @@ user.post("/add-address", validateSingin, async (req, res) => {
 
 user.post("/order", validateSingin, async (req, res) => {
   const { id } = req;
-  const { cart, order } = req.body;
+  const { cart, order, mode } = req.body;
 
   const orderItem = Orders({
     user: id,
@@ -120,6 +120,7 @@ user.post("/order", validateSingin, async (req, res) => {
     localPickup: order?.localPickup,
     address: order?.address,
     additional: order?.additional,
+    mode,
   });
 
   const lineItmes = cart?.map((e) => ({
