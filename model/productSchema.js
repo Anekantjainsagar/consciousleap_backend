@@ -11,6 +11,10 @@ const productSchema = new mongoose.Schema({
   images: Array,
   description: String,
   rating: Number,
+  date:{
+    type:Date,
+    deafult:Date.now()
+  }
 });
 
 const Products = mongoose.model("Products", productSchema);
