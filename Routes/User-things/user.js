@@ -139,7 +139,7 @@ user.post("/order", validateSingin, async (req, res) => {
     mode: "payment",
     line_items: lineItmes,
     success_url: `https://consciousleap.co/cart/5/${orderItem?._id}`,
-    cancel_url: "https://consciousleap.co/cart/4",
+    cancel_url: "https://consciousleap.co/cancel-payment",
   });
 
   orderItem.save().then((response) => {
