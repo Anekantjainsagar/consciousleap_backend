@@ -160,7 +160,7 @@ user.post("/add-to-wishlist", async (req, res) => {
   const { item_id } = req.body;
 
   const response = await Login.updateOne(
-    { _id: id },
+    { _id: req.id },
     { $push: { wishlist: item_id } }
   );
 
