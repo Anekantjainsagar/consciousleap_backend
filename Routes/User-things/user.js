@@ -156,7 +156,7 @@ user.post("/get_order", async (req, res) => {
   res.send(data);
 });
 
-user.post("/add-to-wishlist", async (req, res) => {
+user.post("/add-to-wishlist", validateSingin, async (req, res) => {
   const { item_id } = req.body;
   const { id } = req;
 
