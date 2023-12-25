@@ -158,12 +158,12 @@ user.post("/get_order", async (req, res) => {
 
 user.post("/add-to-wishlist", async (req, res) => {
   const { item_id } = req.body;
+  const { id } = req;
 
   const response = await Login.updateOne(
-    { _id: req.id },
+    { _id: id },
     { $push: { wishlist: item_id } }
   );
-
   res.send(response);
 });
 
