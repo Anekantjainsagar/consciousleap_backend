@@ -1,5 +1,6 @@
 const Login = require("../../model/loginSchema");
 const Therapist = require("../../model/therapistSchema");
+const Admin = require("../../model/adminSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -87,7 +88,27 @@ exports.signInUser = async (req, res) => {
         res.status(203).json({ data: "Invalid credentials", success: false });
       }
     } else {
-      res.status(203).json({ data: "Invalid credentials", success: false });
+      data = await Admin.findOne({ email });
+      if (data) {
+        const matched = await bcrypt.compare(password, data.password);
+
+        if (matched) {
+          const jwtToken = jwt.sign(
+            {
+              user: data._id,
+            },
+            process.env.SECRET_KEY,
+            {
+              expiresIn: "1d",
+            }
+          );
+          res.status(200).send({ jwtToken, user: "Admin" });
+        } else {
+          res.status(203).json({ data: "Invalid credentials", success: false });
+        }
+      } else {
+        res.status(203).json({ data: "Invalid credentials", success: false });
+      }
     }
   }
 };

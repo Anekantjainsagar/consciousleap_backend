@@ -10,6 +10,7 @@ const therapist = require("./Routes/Therapist/therapist");
 const user = require("./Routes/User-things/user");
 const consent = require("./Routes/User/consent");
 const product = require("./Routes/product");
+const admin = require("./Routes/admin");
 
 const https = require("https");
 const fs = require("fs");
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/login", login);
 app.use("/api/user", user);
+app.use("/api/admin", admin);
 app.use("/api/product", product);
 app.use("/api/consent", consent);
 app.use("/api/therapist", therapist);
