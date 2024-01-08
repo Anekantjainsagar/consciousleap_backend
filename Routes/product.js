@@ -38,6 +38,12 @@ product.post("/add", (req, res) => {
     });
 });
 
+product.post("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await Products.deleteOne({ _id: id });
+  res.status(200).send(response);
+});
+
 product.post("/get/:id", async (req, res) => {
   const { id } = req.params;
 

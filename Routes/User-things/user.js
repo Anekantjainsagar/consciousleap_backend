@@ -183,4 +183,10 @@ user.get("/get-users", async (req, res) => {
   res.status(200).send(response);
 });
 
+user.post("/delete-user/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await Login.deleteOne({ _id: id });
+  res.status(200).send(response);
+});
+
 module.exports = user;
