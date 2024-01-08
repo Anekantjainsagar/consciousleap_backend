@@ -38,4 +38,10 @@ consent.get("/get-consents", async (req, res) => {
   res.status(200).send(response);
 });
 
+user.post("/delete-consent/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await Subscribe.deleteOne({ _id: id });
+  res.status(200).send(response);
+});
+
 module.exports = consent;
