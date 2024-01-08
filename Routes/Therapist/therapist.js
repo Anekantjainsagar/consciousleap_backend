@@ -142,4 +142,10 @@ therapist.post("/note/edit", validateSingin, async (req, res) => {
   }
 });
 
+therapist.post("/delete-therapist/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await Therapists.deleteOne({ _id: id });
+  res.status(200).send(response);
+});
+
 module.exports = therapist;

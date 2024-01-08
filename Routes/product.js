@@ -38,6 +38,39 @@ product.post("/add", (req, res) => {
     });
 });
 
+product.post("/update", async (req, res) => {
+  const { id } = req.params;
+  const {
+    name,
+    size,
+    discountPrice,
+    price,
+    available,
+    colors,
+    febric,
+    images,
+    description,
+    rating,
+  } = req.body;
+
+  const product = await Products.updateOne(
+    { _id: id },
+    {
+      name,
+      size,
+      discountPrice,
+      price,
+      available,
+      colors,
+      febric,
+      images,
+      description,
+      rating,
+    }
+  );
+  res.status(200).send(product);
+});
+
 product.post("/delete/:id", async (req, res) => {
   const { id } = req.params;
   const response = await Products.deleteOne({ _id: id });
