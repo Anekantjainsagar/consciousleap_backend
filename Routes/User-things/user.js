@@ -30,6 +30,12 @@ user.get("/get-subscribe", async (req, res) => {
   res.status(200).send(response);
 });
 
+user.post("/delete-subscribe/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await Subscribe.deleteOne({ _id: id });
+  res.status(200).send(response);
+});
+
 user.post("/partners", async (req, res) => {
   const { name, company, email, phone, message } = req.body;
 
