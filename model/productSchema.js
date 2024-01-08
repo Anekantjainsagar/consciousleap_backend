@@ -10,11 +10,14 @@ const productSchema = new mongoose.Schema({
   febric: Array,
   images: Array,
   description: String,
-  rating: Number,
-  date:{
-    type:Date,
-    deafult:Date.now()
-  }
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  date: {
+    type: Date,
+    deafult: Date.now(),
+  },
 });
 
 const Products = mongoose.model("Products", productSchema);
