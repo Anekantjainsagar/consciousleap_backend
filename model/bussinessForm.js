@@ -9,6 +9,10 @@ const bussinessForm = new mongoose.Schema({
   industry: String,
   country: String,
   about: String,
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const Bussiness = mongoose.model("Bussiness", bussinessForm);

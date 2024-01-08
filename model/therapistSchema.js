@@ -97,6 +97,10 @@ const therapistSchema = new mongoose.Schema({
       homework: String,
     },
   ],
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const Therapists = mongoose.model("Therapist", therapistSchema);

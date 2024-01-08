@@ -6,6 +6,10 @@ const partnershipForm = new mongoose.Schema({
   company: String,
   phone: String,
   message: String,
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const Partners = mongoose.model("Partners", partnershipForm);

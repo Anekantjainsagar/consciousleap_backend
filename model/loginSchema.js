@@ -50,6 +50,10 @@ const loginSchema = new mongoose.Schema({
     },
   ],
   wishlist: Array,
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const Login = mongoose.model("Users", loginSchema);
