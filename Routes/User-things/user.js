@@ -25,6 +25,11 @@ user.post("/subscribe", (req, res) => {
     });
 });
 
+user.get("/get-subscribe", async (req, res) => {
+  const response = await Subscribe.find();
+  res.status(200).send(response);
+});
+
 user.post("/partners", async (req, res) => {
   const { name, company, email, phone, message } = req.body;
 
