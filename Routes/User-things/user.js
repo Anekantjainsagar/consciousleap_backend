@@ -167,4 +167,9 @@ user.post("/add-to-wishlist", validateSingin, async (req, res) => {
   res.send(response);
 });
 
+user.get("/get-users", async (req, res) => {
+  const response = await Login.find();
+  res.status(200).send(response);
+});
+
 module.exports = user;
