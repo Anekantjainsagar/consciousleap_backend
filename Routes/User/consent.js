@@ -6,8 +6,6 @@ const { validateSingin } = require("../../middlewares/auth");
 
 consent.post("/check", validateSingin, async (req, res) => {
   const { id } = req;
-
-  console.log(id);
   let data = await Consent.findOne({ userId: id });
 
   console.log(id + data);
@@ -33,6 +31,11 @@ consent.post("/", validateSingin, async (req, res) => {
     .catch((err) => {
       res.send(err);
     });
+});
+
+consent.get("/get-consents", async (req, res) => {
+  const response = await Consent.find();
+  res.status(200).send(response);
 });
 
 module.exports = consent;
