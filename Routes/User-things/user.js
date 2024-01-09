@@ -101,7 +101,7 @@ user.post("/delete-thoughts", async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "thoughts deleted successfully", response });
+      .json({ message: "Thoughts deleted successfully", response });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
@@ -143,8 +143,28 @@ user.post("/gratitude", validateSingin, async (req, res) => {
 
   let obj = { proud, tomorrow, gratefulFor };
 
-  const response = await Login.updateOne({ _id: id }, { gratitude: obj });
+  const response = await Login.updateOne(
+    { _id: id },
+    { $push: { gratitude: obj } }
+  );
   res.status(200).send(response);
+});
+
+user.post("/delete-gratitude", async (req, res) => {
+  try {
+    const { userId, noteId } = req.body;
+
+    const response = await Login.updateOne(
+      { _id: userId },
+      { $pull: { gratitude: { _id: noteId } } }
+    );
+
+    res
+      .status(200)
+      .json({ message: "Gratitude deleted successfully", response });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 user.post("/add-address", validateSingin, async (req, res) => {

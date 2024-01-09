@@ -36,11 +36,13 @@ const loginSchema = new mongoose.Schema({
       thingsPast: String,
     },
   ],
-  gratitude: {
-    gratefulFor: String,
-    proud: String,
-    tomorrow: String,
-  },
+  gratitude: [
+    {
+      gratefulFor: String,
+      proud: String,
+      tomorrow: String,
+    },
+  ],
   addresses: [
     {
       address: String,
