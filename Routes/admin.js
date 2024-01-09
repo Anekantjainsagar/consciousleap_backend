@@ -3,6 +3,7 @@ const admin = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Admin = require("../model/adminSchema");
+const Blog = require("../model/blogSchema");
 
 admin.post(`/add`, async (req, res) => {
   let { email, password } = req.body;
@@ -41,6 +42,43 @@ admin.post(`/add`, async (req, res) => {
         res.status(500).send("Internal server error");
       });
   }
+});
+
+admin.get("/get-blogs", async (req, res) => {
+  const result = await Blog.find();
+  res.status(200).send(result);
+});
+
+admin.post("/add-blog", async (req, res) => {
+  const { title, description, image } = req.body;
+
+  const blog = Blog({ title, description, image });
+  blog
+    .save()
+    .then((resp) => {
+      res.status(200).send(resp);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+admin.post("/update-blog/:id", async (req, res) => {
+  const { title, description, image } = req.body;
+  const { id } = req.params;
+
+  const response = await Blog.updateOne(
+    { _id: id },
+    { title, description, image }
+  );
+  res.status(200).send(response);
+});
+
+admin.post("/delete-blog/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const response = await Blog.deleteOne({ _id: id });
+  res.status(200).send(response);
 });
 
 module.exports = admin;
