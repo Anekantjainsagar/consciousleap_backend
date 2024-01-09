@@ -91,10 +91,10 @@ user.post("/thoughts", validateSingin, async (req, res) => {
 });
 
 user.post("/thingsMyself", validateSingin, async (req, res) => {
-  const { selfCare, thingsMyself, thingsPast } = req.body;
+  const { selfCare, thingsPast } = req.body;
   const { id } = req;
 
-  let obj = { thingsMyself, selfCare, thingsPast };
+  let obj = { thingsMyself: req.body.thingsMyself, selfCare, thingsPast };
 
   const response = await Login.updateOne(
     { _id: id },
