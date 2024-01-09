@@ -103,6 +103,23 @@ user.post("/thingsMyself", validateSingin, async (req, res) => {
   res.status(200).send(response);
 });
 
+user.post("/delete-thingsMyself", async (req, res) => {
+  try {
+    const { userId, noteId } = req.body;
+
+    const response = await Login.updateOne(
+      { _id: userId },
+      { $pull: { thingsMyself: { _id: noteId } } }
+    );
+
+    res
+      .status(200)
+      .json({ message: "ThingsMyself deleted successfully", response });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 user.post("/gratitude", validateSingin, async (req, res) => {
   const { proud, tomorrow, gratefulFor } = req.body;
   const { id } = req;
