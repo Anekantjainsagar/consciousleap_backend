@@ -96,7 +96,7 @@ user.post("/delete-thoughts", async (req, res) => {
 
     const response = await Login.updateOne(
       { _id: userId },
-      { $pull: { thoughts: { _id: noteId } } }
+      { $pull: { thoughts: noteId } }
     );
 
     res
