@@ -28,7 +28,7 @@ const loginSchema = new mongoose.Schema({
       },
     ],
   },
-  thoughts: String,
+  thoughts: Array,
   thingsMyself: [
     {
       selfCare: String,

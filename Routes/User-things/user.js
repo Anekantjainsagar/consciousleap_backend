@@ -86,8 +86,25 @@ user.post("/thoughts", validateSingin, async (req, res) => {
   const { thoughts } = req.body;
   const { id } = req;
 
-  const response = await Login.updateOne({ _id: id }, { thoughts });
+  const response = await Login.updateOne({ _id: id }, { $push: { thoughts } });
   res.status(200).send(response);
+});
+
+user.post("/delete-thoughts", async (req, res) => {
+  try {
+    const { userId, noteId } = req.body;
+
+    const response = await Login.updateOne(
+      { _id: userId },
+      { $pull: { thoughts: { _id: noteId } } }
+    );
+
+    res
+      .status(200)
+      .json({ message: "thoughts deleted successfully", response });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 user.post("/thingsMyself", validateSingin, async (req, res) => {
