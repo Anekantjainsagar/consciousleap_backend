@@ -96,7 +96,10 @@ user.post("/thingsMyself", validateSingin, async (req, res) => {
 
   let obj = { thingsMyself, selfCare, thingsPast };
 
-  const response = await Login.updateOne({ _id: id }, { thingsMyself: obj });
+  const response = await Login.updateOne(
+    { _id: id },
+    { $push: { thingsMyself: obj } }
+  );
   res.status(200).send(response);
 });
 
