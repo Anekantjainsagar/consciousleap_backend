@@ -40,6 +40,6 @@ app.use("/api/product", product);
 app.use("/api/consent", consent);
 app.use("/api/therapist", therapist);
 
-app.listen(port, () => {
+httpsServer.listen(port, () => {
   console.log(`App is listening on port ${process.env.PORT}`);
 });
