@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
-const Login = require("./loginSchema"); // Adjust the path accordingly
 
 const orderSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "Login" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
   products: Array,
   localPickup: String,
   additional: String,

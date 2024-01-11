@@ -90,6 +90,7 @@ admin.get("/get-orders", async (req, res) => {
     const response = await Orders.find().populate("user");
     res.send(response);
   } catch (err) {
+    console.log(err);
     res.send(err);
   }
 });
