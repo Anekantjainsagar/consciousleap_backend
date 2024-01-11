@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Admin = require("../model/adminSchema");
 const Blog = require("../model/blogSchema");
+const Orders = require("../model/orderSchema");
+const Login = require("../model/loginSchema");
 
 admin.post(`/add`, async (req, res) => {
   let { email, password } = req.body;
@@ -44,6 +46,7 @@ admin.post(`/add`, async (req, res) => {
   }
 });
 
+// Blogs
 admin.get("/get-blogs", async (req, res) => {
   const result = await Blog.find();
   res.status(200).send(result);
@@ -79,6 +82,16 @@ admin.post("/delete-blog/:id", async (req, res) => {
 
   const response = await Blog.deleteOne({ _id: id });
   res.status(200).send(response);
+});
+
+// Orders post
+admin.get("/get-orders", async (req, res) => {
+  try {
+    const response = await Orders.find().populate("user");
+    res.send(response);
+  } catch (err) {
+    res.send(err);
+  }
 });
 
 module.exports = admin;
