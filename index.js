@@ -22,12 +22,12 @@ app.use(express.json());
 
 const port = process.env.PORT || 5000;
 // Load SSL certificate and private key
-// const options = {
-//   key: fs.readFileSync("/home/ec2-user/ssl/consciousleap.co/privkey1.pem"),
-//   cert: fs.readFileSync("/home/ec2-user/ssl/consciousleap.co/fullchain1.pem"),
-// };
+const options = {
+  key: fs.readFileSync("/home/ec2-user/ssl/consciousleap.co/privkey1.pem"),
+  cert: fs.readFileSync("/home/ec2-user/ssl/consciousleap.co/fullchain1.pem"),
+};
 
-// const httpsServer = https.createServer(options, app);
+const httpsServer = https.createServer(options, app);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
