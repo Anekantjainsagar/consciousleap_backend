@@ -50,6 +50,17 @@ user.post("/partners", async (req, res) => {
     });
 });
 
+user.post("/get-partners", async (req, res) => {
+  const response = await Partners.find();
+  res.send(response);
+});
+
+user.post("/delete-partner/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await Partners.deleteOne({ _id: id });
+  res.status(200).send(response);
+});
+
 user.post("/bussiness", async (req, res) => {
   const {
     name,
@@ -80,6 +91,17 @@ user.post("/bussiness", async (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+});
+
+user.post("/get-busssiness", async (req, res) => {
+  const response = await Bussiness.find();
+  res.send(response);
+});
+
+user.post("/delete-bussiness/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await Bussiness.deleteOne({ _id: id });
+  res.status(200).send(response);
 });
 
 user.post("/thoughts", validateSingin, async (req, res) => {
