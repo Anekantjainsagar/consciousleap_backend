@@ -36,7 +36,7 @@ const {
 
 // Getting routes
 therapist.post("/get-therapist", validateSingin, getTherapist);
-therapist.post("/update-therapist", validateSingin, updateTherapist);
+therapist.post("/update-therapist", updateTherapist);
 
 // Filter routes
 therapist.get("/get-area-of-expertise", getAreaOfExpertise);
