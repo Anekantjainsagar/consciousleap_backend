@@ -239,6 +239,58 @@ user.post("/order", validateSingin, async (req, res) => {
   res.json({ id: session.id, orderItem });
 });
 
+user.get("/get-order-report", async (req, res) => {
+  const orders = await Orders.find();
+  let report = {
+    day: 0,
+    week: 0,
+    month: 0,
+  };
+
+  orders.map((e) => {
+    if (
+      new Date(e.date).toString().slice(0, 16) ===
+      new Date().toString().slice(0, 16)
+    ) {
+      report.day++;
+    }
+    if (e.date > Date.now() - 7 * 24 * 60 * 60 * 1000) {
+      report.week++;
+    }
+    if (new Date(e?.date).getMonth() >= new Date().getMonth()) {
+      report.month++;
+    }
+  });
+  res.status(200).send(report);
+});
+
+user.get("/get-users-report", async (req, res) => {
+  const users = await Login.find();
+  let report = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  users.map((e) => {
+    report[new Date(e.date).getMonth()]++;
+  });
+
+  res.status(200).send(report);
+});
+
+user.get("/get-revenue", async (req, res) => {
+  const payment = await Orders.find();
+  let report = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let totalAmount = 0;
+  payment.map((e) => {
+    let total = e?.products
+      ?.reduce((acc, item) => acc + item?.price * item?.quantity, 0)
+      .toFixed(2);
+    total = parseInt(total) + parseInt(total * 0.18);
+    console.log(total);
+    report[new Date(e.date).getMonth()] += total;
+    totalAmount += total;
+  });
+  res.status(200).send({ report, total: totalAmount });
+});
+
 user.post("/get_order", async (req, res) => {
   const { id } = req.body;
 
