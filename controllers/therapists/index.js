@@ -91,8 +91,14 @@ exports.updateTherapist = async (req, res) => {
 
 exports.reviewTherapist = async (req, res) => {
   const { id } = req;
-  const { positivenss, knowledgable, comfortability, experience, therapistId } =
-    req.body;
+  const {
+    positivenss,
+    knowledgable,
+    comfortability,
+    experience,
+    therapistId,
+    date,
+  } = req.body;
 
   let review = {
     user: id,
@@ -100,6 +106,7 @@ exports.reviewTherapist = async (req, res) => {
     knowledgable,
     comfortability,
     experience,
+    date,
   };
 
   let response = await Therapist.updateOne(
