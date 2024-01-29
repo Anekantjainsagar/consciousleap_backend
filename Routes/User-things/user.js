@@ -324,7 +324,11 @@ user.post("/rain", validateSingin, async (req, res) => {
   const { id } = req;
 
   try {
-    const response = await Login.updateOne({ _id: id }, { $inc: { rain: 1 } });
+    const count = await Login.findOne({ _id: id });
+    const response = await Login.updateOne(
+      { _id: id },
+      { rain: count?.rain + 1 }
+    );
     res
       .status(200)
       .json({ message: "Rain count incremented successfully", response });
@@ -337,9 +341,10 @@ user.post("/sunshine", validateSingin, async (req, res) => {
   const { id } = req;
 
   try {
+    const count = await Login.findOne({ _id: id });
     const response = await Login.updateOne(
       { _id: id },
-      { $inc: { sunshine: 1 } }
+      { sunshine: count?.sunshine + 1 }
     );
     res
       .status(200)
@@ -353,7 +358,11 @@ user.post("/cloud", validateSingin, async (req, res) => {
   const { id } = req;
 
   try {
-    const response = await Login.updateOne({ _id: id }, { $inc: { cloud: 1 } });
+    const count = await Login.findOne({ _id: id });
+    const response = await Login.updateOne(
+      { _id: id },
+      { cloud: count?.cloud + 1 }
+    );
     res
       .status(200)
       .json({ message: "Rain count incremented successfully", response });
@@ -366,7 +375,11 @@ user.post("/light", validateSingin, async (req, res) => {
   const { id } = req;
 
   try {
-    const response = await Login.updateOne({ _id: id }, { $inc: { light: 1 } });
+    const count = await Login.findOne({ _id: id });
+    const response = await Login.updateOne(
+      { _id: id },
+      { light: count?.light + 1 }
+    );
     res
       .status(200)
       .json({ message: "Rain count incremented successfully", response });
