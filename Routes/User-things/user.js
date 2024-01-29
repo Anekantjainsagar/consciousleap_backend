@@ -350,6 +350,7 @@ user.post("/sunshine", validateSingin, async (req, res) => {
       .status(200)
       .json({ message: "Rain count incremented successfully", response });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: "Internal server error" });
   }
 });
