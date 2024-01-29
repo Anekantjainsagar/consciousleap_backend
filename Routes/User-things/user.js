@@ -340,7 +340,7 @@ user.post("/rain", validateSingin, async (req, res) => {
 user.post("/sunshine", validateSingin, async (req, res) => {
   const { id } = req;
   const count = await Login.findOne({ _id: id });
-  console.log(count?.sunshine);
+  console.log(count);
   try {
     const response = await Login.updateOne(
       { _id: id },
