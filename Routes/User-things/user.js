@@ -339,9 +339,9 @@ user.post("/rain", validateSingin, async (req, res) => {
 
 user.post("/sunshine", validateSingin, async (req, res) => {
   const { id } = req;
-
+  const count = await Login.findOne({ _id: id });
+  console.log(count?.sunshine);
   try {
-    const count = await Login.findOne({ _id: id });
     const response = await Login.updateOne(
       { _id: id },
       { sunshine: count?.sunshine + 1 }
@@ -350,7 +350,7 @@ user.post("/sunshine", validateSingin, async (req, res) => {
       .status(200)
       .json({ message: "Rain count incremented successfully", response });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
