@@ -320,4 +320,59 @@ user.post("/delete-user/:id", async (req, res) => {
   res.status(200).send(response);
 });
 
+user.post("/rain", validateSingin, async (req, res) => {
+  const { id } = req;
+
+  try {
+    const response = await Login.updateOne({ _id: id }, { $inc: { rain: 1 } });
+    res
+      .status(200)
+      .json({ message: "Rain count incremented successfully", response });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+user.post("/sunshine", validateSingin, async (req, res) => {
+  const { id } = req;
+
+  try {
+    const response = await Login.updateOne(
+      { _id: id },
+      { $inc: { sunshine: 1 } }
+    );
+    res
+      .status(200)
+      .json({ message: "Rain count incremented successfully", response });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+user.post("/cloud", validateSingin, async (req, res) => {
+  const { id } = req;
+
+  try {
+    const response = await Login.updateOne({ _id: id }, { $inc: { cloud: 1 } });
+    res
+      .status(200)
+      .json({ message: "Rain count incremented successfully", response });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+user.post("/light", validateSingin, async (req, res) => {
+  const { id } = req;
+
+  try {
+    const response = await Login.updateOne({ _id: id }, { $inc: { light: 1 } });
+    res
+      .status(200)
+      .json({ message: "Rain count incremented successfully", response });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = user;

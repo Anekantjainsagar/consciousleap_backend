@@ -58,6 +58,22 @@ const loginSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  rain: {
+    type: Number,
+    default: 0,
+  },
+  sunshine: {
+    type: Number,
+    default: 0,
+  },
+  cloud: {
+    type: Number,
+    default: 0,
+  },
+  light: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Login = mongoose.model("Users", loginSchema);
