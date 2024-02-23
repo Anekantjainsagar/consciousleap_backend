@@ -38,7 +38,7 @@ product.post("/add", (req, res) => {
     });
 });
 
-product.post("/update", async (req, res) => {
+product.post("/update/:id", async (req, res) => {
   const { id } = req.params;
   const {
     name,

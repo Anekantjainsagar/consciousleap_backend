@@ -213,30 +213,91 @@ user.post("/order", validateSingin, async (req, res) => {
     mode,
   });
 
-  const lineItmes = cart?.map((e) => ({
-    price_data: {
-      currency: "inr",
-      product_data: {
-        name: e?.name,
+  if (mode == "Stripe") {
+    const lineItmes = cart?.map((e) => ({
+      price_data: {
+        currency: "inr",
+        product_data: {
+          name: e?.name,
+        },
+        unit_amount: e?.price * 100 + e?.price * 18,
       },
-      unit_amount: e?.price * 100 + e?.price * 18,
-    },
-    quantity: e?.quantity,
-  }));
+      quantity: e?.quantity,
+    }));
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    mode: "payment",
-    line_items: lineItmes,
-    success_url: `https://consciousleap.co/cart/5/${orderItem?._id}`,
-    cancel_url: "https://consciousleap.co/cancel-payment",
-  });
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: lineItmes,
+      success_url: `https://consciousleap.co/cart/5/${orderItem?._id}`,
+      cancel_url: "https://consciousleap.co/cancel-payment",
+    });
 
-  orderItem.save().then((response) => {
-    console.log(response);
-  });
+    orderItem.save().then((response) => {
+      console.log(response);
+    });
 
-  res.json({ id: session.id, orderItem });
+    res.json({ id: session.id, orderItem });
+  } else if (mode == "Paypal") {
+    paypal.configure({
+      mode: "sandbox", // 'sandbox' or 'live'
+      client_id:
+        "AejBxyhLMNc7Uw9ggK3BIZobFw1jLNisqR7lC67KHASyGRYbjDOdzUuDiVuuC2lC-cDbpcZOlqPF_5vC",
+      client_secret:
+        "ENtxhnI70dNVEymnueqXS5jMVot4DfB7xRDzzcvhf-RCwe6OqgOycJ_D3tthSEAHhV7anE9loqd2qLpm",
+    });
+
+    const paymentData = {
+      intent: "sale",
+      payer: {
+        payment_method: "paypal",
+      },
+      redirect_urls: {
+        return_url: `https://consciousleap.co/cart/5/${orderItem?._id}`,
+        cancel_url: "https://consciousleap.co/cancel-payment",
+      },
+      transactions: [
+        {
+          amount: {
+            total: cart?.cartData
+              ?.reduce(
+                (acc, item) =>
+                  acc +
+                  (item?.price * item?.quantity +
+                    item?.price * item?.quantity * (18 / 100)),
+                0
+              )
+              .toFixed(2),
+            currency: "INR",
+          },
+          description: "Sample payment description",
+        },
+      ],
+    };
+
+    paypal.payment.create(paymentData, (error, payment) => {
+      if (error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        // Redirect the user to the approval URL
+        const approvalUrl = payment.links.find(
+          (link) => link.rel === "approval_url"
+        ).href;
+
+        orderItem.save().then((response) => {
+          console.log(response);
+        });
+
+        res.json({ id: approvalUrl, orderItem });
+      }
+    });
+  } else {
+    orderItem.save().then((response) => {
+      console.log(response);
+    });
+
+    res.json({ orderItem });
+  }
 });
 
 user.get("/get-order-report", async (req, res) => {
