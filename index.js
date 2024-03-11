@@ -11,6 +11,7 @@ const user = require("./Routes/User-things/user");
 const consent = require("./Routes/User/consent");
 const product = require("./Routes/product");
 const admin = require("./Routes/admin");
+const collab = require("./Routes/collab");
 
 const https = require("https");
 const fs = require("fs");
@@ -28,6 +29,7 @@ const options = {
 };
 
 const httpsServer = https.createServer(options, app);
+// const httpsServer = https.createServer(app);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
@@ -39,6 +41,7 @@ app.use("/api/admin", admin);
 app.use("/api/product", product);
 app.use("/api/consent", consent);
 app.use("/api/therapist", therapist);
+app.use("/api/collab", collab);
 
 httpsServer.listen(port, () => {
   console.log(`App is listening on port ${process.env.PORT}`);
