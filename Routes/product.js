@@ -86,14 +86,22 @@ product.post("/get/:id", async (req, res) => {
 
 product.post("/get-all", async (req, res) => {
   let search = req.query.search;
+  let page = parseInt(req.query.page) || 1; // Default to page 1
+  let limit = 20 * page;
 
   let query = {};
+  const products_length = await Products.find();
   if (search?.length > 0) {
     query.name = { $regex: search, $options: "i" };
   }
 
-  let products = await Products.find(query).sort({ name: 1 });
-  res.send(products);
+  try {
+    let products = await Products.find(query).sort({ name: 1 }).limit(limit);
+    res.send({ products, length: products_length.length });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 module.exports = product;
