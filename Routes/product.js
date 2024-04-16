@@ -96,7 +96,7 @@ product.post("/get-all", async (req, res) => {
   }
 
   try {
-    let products = await Products.find(query).sort({ name: 1 }).limit(limit);
+    let products = await Products.find(query).sort({ _id: -1 }).limit(limit);
     res.send({ products, length: products_length.length });
   } catch (err) {
     console.error(err);
