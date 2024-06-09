@@ -1,6 +1,8 @@
 const express = require("express");
 const login = express.Router();
 
+var nodemailer = require("nodemailer");
+
 // Controllers
 const {
   signInUser,
@@ -49,5 +51,27 @@ login.post("/signup", validateSignUp, userValidationResult, signUp);
 login.post("/signin", signInUser);
 
 login.use("/otp-verification", validateSignUp, userValidationResult, sendMail);
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.ethereal.email",
+  port: 587,
+  secure: false, // Use `true` for port 465, `false` for all other ports
+  auth: {
+    user: "scarlett.sawayn@ethereal.email",
+    pass: "Uq7qCXw9xBdsszVSMa",
+  },
+});
+
+login.get("/send-test-mail", async (req, res) => {
+  const info = await transporter.sendMail({
+    from: '"Maddison Foo Koch 👻" scarlett.sawayn@ethereal.email', // sender address
+    to: "anekantjainsagar@gmail.com", // list of receivers
+    subject: "Hello ✔", // Subject line
+    text: "Hello world?", // plain text body
+    html: "<b>Hello world?</b>", // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+});
 
 module.exports = login;
