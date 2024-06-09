@@ -62,7 +62,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-login.get("/send-test-mail", async (req, res) => {
+login.post("/send-test-mail", async (req, res) => {
   let email = req.body.email;
   console.log(email);
 
