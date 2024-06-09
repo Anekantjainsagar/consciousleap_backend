@@ -65,13 +65,13 @@ const transporter = nodemailer.createTransport({
 login.get("/send-test-mail", async (req, res) => {
   const info = await transporter.sendMail({
     from: '"Maddison Foo Koch 👻" scarlett.sawayn@ethereal.email', // sender address
-    to: "anekantjainsagar@gmail.com", // list of receivers
+    to: req.body.email, // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
     html: "<b>Hello world?</b>", // html body
   });
 
-  console.log("Message sent: %s", info.messageId);
+  res.send("Message sent: %s", info.messageId);
 });
 
 module.exports = login;
