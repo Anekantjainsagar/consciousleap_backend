@@ -80,7 +80,7 @@ login.post("/send-test-mail", async (req, res) => {
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello world {{email}}</h1>
+    <h1>Hello world ${email}</h1>
 </body>
 </html>`, // html body
   });
