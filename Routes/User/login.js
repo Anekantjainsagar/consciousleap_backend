@@ -53,12 +53,13 @@ login.post("/signin", signInUser);
 login.use("/otp-verification", validateSignUp, userValidationResult, sendMail);
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.ethereal.email",
+  service: "gmail",
+  host: "smtp.gmail",
   port: 587,
   secure: false, // Use `true` for port 465, `false` for all other ports
   auth: {
-    user: "scarlett.sawayn@ethereal.email",
-    pass: "Uq7qCXw9xBdsszVSMa",
+    user: "anekantjainsagar@gmail.com",
+    pass: "imfzrwfdcaiwqqhi",
   },
 });
 
@@ -74,7 +75,7 @@ login.post("/send-test-mail", async (req, res) => {
     html: "<b>Hello world?</b>", // html body
   });
 
-  res.send("Message sent: %s", info.messageId);
+  res.status(200).send("Message sent: %s", info.messageId);
 });
 
 module.exports = login;
