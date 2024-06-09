@@ -63,9 +63,12 @@ const transporter = nodemailer.createTransport({
 });
 
 login.get("/send-test-mail", async (req, res) => {
+  let email = req.body.email;
+  console.log(email);
+
   const info = await transporter.sendMail({
     from: '"Maddison Foo Koch 👻" scarlett.sawayn@ethereal.email', // sender address
-    to: req.body.email, // list of receivers
+    to: email, // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
     html: "<b>Hello world?</b>", // html body
