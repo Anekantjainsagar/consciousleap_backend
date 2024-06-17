@@ -97,21 +97,11 @@ login.post("/send-test-mail", async (req, res) => {
       "
     >
       <div>
-        <div
-          style="
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          "
-        >
+        <div>
           <img
-            src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1718605608/tjy89t4q8snlcve2ppqc.png"
+            src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1718610164/soh8sbaqx4veir4kzyf9e.png"
             alt="Consciousleap"
-            style="margin-left: -30px"
-          />
-          <img
-            src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1718605702/cq9njyqqqugtakbtjbd1.png"
-            alt="Consciousleap"
+            style="width: 25vw"
           />
         </div>
         <div
