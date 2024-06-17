@@ -78,9 +78,8 @@ login.post("/send-test-mail", async (req, res) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
       * {
-        font-family: "Montserrat", sans-serif;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
       }
     </style>
   </head>
