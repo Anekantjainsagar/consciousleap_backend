@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const Login = require("../../model/loginSchema");
 const bcrypt = require("bcryptjs");
-const transporter = require('../../Routes/transporter')
+const transporter = require("../../Routes/transporter");
 
 exports.sendUrl = async (req, res) => {
   const email = req.body.email;
@@ -38,11 +38,11 @@ exports.sendUrl = async (req, res) => {
       * {
         font-family: Verdana, Geneva, Tahoma, sans-serif;
       }
-    </style>
-  </head>
-  <body style="margin: 0; padding: 0">
-    <div
-      style="
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
         background: rgb(78, 102, 173);
         padding: 70px 100px;
         background: linear-gradient(
@@ -51,60 +51,88 @@ exports.sendUrl = async (req, res) => {
           rgba(255, 204, 214, 0.5) 50%,
           rgba(125, 207, 205, 0.5) 100%
         );
-      "
-    >
-      <div>
-        <div>
-          <img
-            src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1718777961/pcxxnb6ngla25q2z16dy.png"
-            alt="Consciousleap"
-            style="width: 25vw"
-          />
-        </div>
-        <div
-          style="
-            background-color: white;
-            margin: 0 5px;
-            border-radius: 12px;
-            margin-top: 15px;
-            padding: 15px 45px;
-            color: #4e66ad;
-            font-weight: 400;
-            font-size: 18px;
-          "
-        >
-          <p>Hi there, ${data?.name}</p>
-          <p style="padding: 10px 0">
-            You are about to reset your password for consciousleap. Please click
-            on the button below to reset your password.
-          </p>
-          <a
-            href=${uri}
-            style="
-              background: #4e66ad;
-              color: white;
-              padding: 10px 25px;
-              border-radius: 10px;
-              text-decoration: none;
-              font-size: 16px;
-              font-weight: 600;
-            "
-          >
-            Click here to reset your password!
-          </a>
-          <p style="padding: 10px 0">
-            Something amiss? You can always contact us for any assistance!
-          </p>
-          <div style="height: 1px; background: rgba(0, 0, 0, 0.4)"></div>
-          <p style="padding-top: 15px; font-weight: 600">Best Wishes,</p>
-          <p style="font-weight: 600">Oneness</p>
-          <p style="font-weight: 600">consciousleap.co</p>
-        </div>
+      }
+      .logo img {
+        width: 25vw;
+      }
+      .content {
+        background-color: white;
+        margin: 0 5px;
+        border-radius: 12px;
+        margin-top: 15px;
+        padding: 15px 45px;
+        color: #4e66ad;
+        font-weight: 400;
+        font-size: 18px;
+      }
+      .btn {
+        background: #4e66ad;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .divider {
+        height: 1px;
+        background: rgba(0, 0, 0, 0.4);
+      }
+      .footer {
+        padding-top: 15px;
+        font-weight: 600;
+      }
+      .para {
+        padding: 10px 0;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 30px 20px;
+        }
+        .content {
+          padding: 7px 25px;
+          font-size: 16px;
+        }
+        .btn {
+          padding: 5px 12px;
+          border-radius: 6px;
+          font-size: 14px;
+        }
+        .footer {
+          padding-top: 3px;
+        }
+        .para {
+          padding: 5px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img
+          src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1718777961/pcxxnb6ngla25q2z16dy.png"
+          alt="Consciousleap"
+        />
+      </div>
+      <div class="content">
+        <p>Hi there, ${data?.name}</p>
+        <p class="para">
+          You are about to reset your password for consciousleap. Please click
+          on the button below to reset your password.
+        </p>
+        <a href=${otp} class="btn">Click here to reset your password!</a>
+        <p class="para">
+          Something amiss? You can always contact us for any assistance!
+        </p>
+        <div class="divider"></div>
+        <p class="footer">Best Wishes,</p>
+        <p class="footer">Oneness</p>
+        <p class="footer">consciousleap.co</p>
       </div>
     </div>
   </body>
 </html>
-
 `,
     });
 
