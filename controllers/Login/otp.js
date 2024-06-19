@@ -86,8 +86,6 @@ exports.sendMail = async (req, res) => {
         }
         .content {
           padding: 7px 25px;
-          color: #4e66ad;
-          font-weight: 400;
           font-size: 16px;
         }
         .otp {
@@ -107,7 +105,7 @@ exports.sendMail = async (req, res) => {
   <body>
     <div class="container">
       <div class="logo">
-                <svg
+        <svg
           width="298"
           height="38"
           viewBox="0 0 298 38"
