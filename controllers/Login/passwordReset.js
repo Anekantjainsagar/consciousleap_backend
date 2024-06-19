@@ -121,7 +121,7 @@ exports.sendUrl = async (req, res) => {
           You are about to reset your password for consciousleap. Please click
           on the button below to reset your password.
         </p>
-        <a href=${otp} class="btn">Click here to reset your password!</a>
+        <a href=${uri} class="btn">Click here to reset your password!</a>
         <p class="para">
           Something amiss? You can always contact us for any assistance!
         </p>
