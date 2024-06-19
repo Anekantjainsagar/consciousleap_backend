@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const Login = require("../../model/loginSchema");
 const bcrypt = require("bcryptjs");
+const transporter = require('../../Routes/transporter')
 
 exports.sendUrl = async (req, res) => {
   const email = req.body.email;
