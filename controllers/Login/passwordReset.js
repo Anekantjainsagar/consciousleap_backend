@@ -26,7 +26,7 @@ exports.sendUrl = async (req, res) => {
     const info = await transporter.sendMail({
       from: '"Consciousleap" otp@consciousleap.co',
       to: email,
-      subject: "Verification OTP from consciousleap",
+      subject: "Password reset for consciousleap",
       text: "Welcome to Consciousleap",
       html: `<!DOCTYPE html>
 <html lang="en">
