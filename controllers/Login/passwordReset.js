@@ -86,12 +86,7 @@ exports.sendUrl = async (req, res) => {
         padding: 10px 0;
       }
       .hoverClass {
-        color: transparent;
-        background-clip: text;
-        width: fit-content;
-        font-weight: 500;
-        background: linear-gradient(90deg, #4e66ad, #f58e88, #7dcfcd);
-        -webkit-background-clip: text;
+        color: white;
       }
       @media (max-width: 600px) {
         .container {
