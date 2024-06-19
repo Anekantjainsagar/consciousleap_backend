@@ -22,10 +22,10 @@ exports.sendMail = async (req, res) => {
       });
 
       const info = await transporter.sendMail({
-        from: '"Maddison Foo Koch 👻" scarlett.sawayn@ethereal.email',
+        from: '"Consciousleap" otp@consciousleap.co',
         to: email,
-        subject: "Hello ✔",
-        text: "Hello world?",
+        subject: "Verification OTP from consciousleap",
+        text: "Welcome to Consciousleap",
         html: `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -54,7 +54,7 @@ exports.sendMail = async (req, res) => {
       <div>
         <div>
           <img
-            src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1718610164/soh8sbaqx4veir4kzyf9e.png"
+            src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1718777961/pcxxnb6ngla25q2z16dy.png"
             alt="Consciousleap"
             style="width: 25vw"
           />
