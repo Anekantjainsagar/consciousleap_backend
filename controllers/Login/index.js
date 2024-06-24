@@ -3,6 +3,7 @@ const Therapist = require("../../model/therapistSchema");
 const Admin = require("../../model/adminSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const transporter = require("../../Routes/transporter");
 
 exports.signUp = async (req, res) => {
   let { name, email, password, phone } = req.body;
@@ -227,6 +228,156 @@ exports.updateQuestionnaire = async (req, res) => {
   }
 
   let questionnaire = { age, problem, answers, backendAnswers };
+
+  const user_data = await Login.findOne({ _id: id });
+
+  const info = await transporter.sendMail({
+    from: '"Consciousleap" otp@consciousleap.co',
+    to: user_data?.email,
+    subject: "Questionnaire data from consciousleap",
+    text: "Welcome to Consciousleap",
+    html: `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: 0;
+        padding: 20px 0;
+        width: 90%;
+        margin: auto;
+      }
+      .element {
+        background: linear-gradient(to right, #4961ac, #f2685d, #4ec1ba);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        width: fit-content;
+        font-weight: 500;
+        margin: auto;
+      }
+      .line {
+        height: 1px;
+        background-color: black;
+        margin: 15px 0;
+      }
+      .block {
+        background: linear-gradient(to right, #4961ac, #f2685d, #4ec1ba);
+        width: 100%;
+        padding: 2px;
+        border-radius: 100px;
+        margin-bottom: 10px;
+      }
+      .blockWhite {
+        padding: 10px;
+        border-radius: 100px;
+        background-color: white;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .blockWhite .roundCircle {
+        color: #4961ac;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 45px;
+        width: 130px;
+        height: 130px;
+        border: 2px solid #4961ac;
+        border-radius: 100%;
+      }
+      .blockWhite .roundCircle span {
+        font-size: 20px;
+      }
+      .roundText {
+        width: 89%;
+        height: fit-content;
+      }
+      .blockWhite .roundText h4 {
+        font-size: 30px;
+        margin: 0;
+        font-weight: 400;
+        color: #4961ac;
+      }
+      .roundText p {
+        margin: 0;
+        font-size: 18px;
+        color: #777777;
+      }
+      .desc {
+        padding-top: 10px;
+        text-align: center;
+        font-size: 16px;
+        color: #777777;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="element">Initial Analysis</h1>
+    <div class="line"></div>
+    <div>
+      <div class="block">
+        <div class="blockWhite">
+          <div class="roundCircle">${backendAnswers[0].value}<span>%</span></div>
+          <div class="roundText">
+            <h4>Enviromental Mastery</h4>
+            <p>
+              ${backendAnswers[0].text}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="blockWhite">
+          <div class="roundCircle">${backendAnswers[1].value}<span>%</span></div>
+          <div class="roundText">
+            <h4>Purpose In Life</h4>
+            <p>
+              ${backendAnswers[1].text}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="blockWhite">
+          <div class="roundCircle">${backendAnswers[2].value}<span>%</span></div>
+          <div class="roundText">
+            <h4>Self Acceptance</h4>
+            <p>
+              ${backendAnswers[2].text}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="blockWhite">
+          <div class="roundCircle">${backendAnswers[3].value}<span>%</span></div>
+          <div class="roundText">
+            <h4>Relations with Others</h4>
+            <p>
+              ${backendAnswers[3].text}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="desc">
+      Disclaimer: This questionnaire is intended to provide a general assessment
+      of mental health and should not be considered a substitute for
+      professional evaluation or advice.The results of this questionnaire are
+      based solely on the provided responses and should be interpreted with
+      caution.It is important to consult with a qualified mental health
+      professional for assessment and personalized guidance.
+    </div>
+  </body>
+</html>
+`,
+  });
 
   Login.updateOne({ _id: id }, { questionnaire })
     .then((response) => {
