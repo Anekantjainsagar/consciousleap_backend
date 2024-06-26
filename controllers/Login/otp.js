@@ -80,7 +80,12 @@ exports.sendMail = async (req, res) => {
         padding: 10px 0;
       }
       .hoverClass {
-        color: white;
+        background: linear-gradient(to right, #4961ac, #f2685d, #4ec1ba);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        width: fit-content;
+        margin: auto;
       }
       @media (max-width: 600px) {
         .container {

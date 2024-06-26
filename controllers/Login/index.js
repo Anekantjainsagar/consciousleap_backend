@@ -247,7 +247,7 @@ exports.updateQuestionnaire = async (req, res) => {
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         margin: 0;
         padding: 20px 0;
-        width: 90%;
+        width: 85%;
         margin: auto;
       }
       .element {
@@ -280,22 +280,25 @@ exports.updateQuestionnaire = async (req, res) => {
         justify-content: space-between;
         align-items: center;
       }
-      .blockWhite .roundCircle {
-        color: #4961ac;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      .blockWhite .roundCircleText {
+        position: relative;
         font-size: 45px;
         width: 130px;
         height: 130px;
         border: 2px solid #4961ac;
         border-radius: 100%;
       }
+      .blockWhite .roundCircle {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
       .blockWhite .roundCircle span {
         font-size: 20px;
       }
       .roundText {
-        width: 89%;
+        width: 72vw;
         height: fit-content;
       }
       .blockWhite .roundText h4 {
@@ -323,45 +326,45 @@ exports.updateQuestionnaire = async (req, res) => {
     <div>
       <div class="block">
         <div class="blockWhite">
-          <div class="roundCircle">${backendAnswers[0].value}<span>%</span></div>
+          <div class="roundCircleText">
+            <div class="roundCircle">${backendAnswers[0].value}<span>%</span></div>
+          </div>
           <div class="roundText">
             <h4>Enviromental Mastery</h4>
-            <p>
-              ${backendAnswers[0].text}
-            </p>
+            <p>${backendAnswers[0].text}</p>
           </div>
         </div>
       </div>
       <div class="block">
         <div class="blockWhite">
-          <div class="roundCircle">${backendAnswers[1].value}<span>%</span></div>
+          <div class="roundCircleText">
+            <div class="roundCircle">${backendAnswers[1].value}<span>%</span></div>
+          </div>
           <div class="roundText">
             <h4>Purpose In Life</h4>
-            <p>
-              ${backendAnswers[1].text}
-            </p>
+            <p>${backendAnswers[1].text}</p>
           </div>
         </div>
       </div>
       <div class="block">
         <div class="blockWhite">
-          <div class="roundCircle">${backendAnswers[2].value}<span>%</span></div>
+          <div class="roundCircleText">
+            <div class="roundCircle">${backendAnswers[2].value}<span>%</span></div>
+          </div>
           <div class="roundText">
             <h4>Self Acceptance</h4>
-            <p>
-              ${backendAnswers[2].text}
-            </p>
+            <p>${backendAnswers[2].text}</p>
           </div>
         </div>
       </div>
       <div class="block">
         <div class="blockWhite">
-          <div class="roundCircle">${backendAnswers[3].value}<span>%</span></div>
+          <div class="roundCircleText">
+            <div class="roundCircle">${backendAnswers[3].value}<span>%</span></div>
+          </div>
           <div class="roundText">
             <h4>Relations with Others</h4>
-            <p>
-              ${backendAnswers[3].text}
-            </p>
+            <p>${backendAnswers[3].text}</p>
           </div>
         </div>
       </div>
