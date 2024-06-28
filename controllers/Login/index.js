@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const transporter = require("../../Routes/transporter");
 var pdf = require("html-pdf");
+const puppeteer = require("puppeteer");
 
 exports.signUp = async (req, res) => {
   let { name, email, password, phone } = req.body;
@@ -144,65 +145,6 @@ exports.deleteQuestionnaire = async function (req, res) {
     });
 };
 
-const generatePDFAndSendEmail = async (
-  html,
-  user_data,
-  id,
-  questionnaire,
-  res
-) => {
-  try {
-    const pdfPath = `./${user_data?._id}Questionnaire Report.pdf`;
-
-    pdf
-      .create(html, {
-        childProcessOptions: {
-          env: {
-            OPENSSL_CONF: "/dev/null",
-          },
-        },
-      })
-      .toFile(pdfPath, async (err, resul) => {
-        if (err) {
-          console.error("Error generating PDF:", err);
-          return res.status(500).send("Error generating PDF");
-        }
-
-        if (resul.filename) {
-          try {
-            const result = await transporter.sendMail({
-              to: user_data?.email,
-              subject: `Questionnaire report from consciousleap`,
-              text: `
-            Dear ${user_data?.name},
-            Confident you're doing well...!
-
-            If you have any questions or require further clarification, please do not hesitate to reach out to consciousleap.co.
-
-            Best
-            Team consciousleap.`,
-              attachments: [
-                {
-                  filename: "Questionnaire Report.pdf",
-                  path: pdfPath,
-                },
-              ],
-            });
-
-            await Login.updateOne({ _id: id }, { questionnaire });
-            res.send(questionnaire);
-          } catch (emailErr) {
-            console.error("Error sending email:", emailErr);
-            res.status(500).send("Error sending email");
-          }
-        }
-      });
-  } catch (err) {
-    console.error("Unexpected error:", err);
-    res.status(500).send("Unexpected error");
-  }
-};
-
 exports.updateQuestionnaire = async (req, res) => {
   let { age, problem, answers } = req.body;
   let { id } = req;
@@ -291,9 +233,10 @@ exports.updateQuestionnaire = async (req, res) => {
 
   let questionnaire = { age, problem, answers, backendAnswers };
 
-  console.log("Questionnaire analysis calculated");
-
+  await Login.updateOne({ _id: id }, { questionnaire });
   const user_data = await Login.findOne({ _id: id });
+
+  console.log("Questionnaire analysis calculated");
 
   const html = `<html>
   <body
@@ -504,16 +447,16 @@ exports.updateQuestionnaire = async (req, res) => {
 </html>
 `;
 
-  pdf.create(html).toBuffer(async (err, buffer) => {
-    if (err) {
-      console.error("Error generating PDF:", err);
-      return res.status(500).send("Error generating PDF");
-    }
-    try {
-      const result = await transporter.sendMail({
-        to: user_data?.email,
-        subject: `Questionnaire report from consciousleap`,
-        text: `
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setContent(html);
+  const pdfBuffer = await page.pdf({ format: "A4" });
+
+  await browser.close();
+  const result = await transporter.sendMail({
+    to: user_data?.email,
+    subject: `Questionnaire report from consciousleap`,
+    text: `
           Dear ${user_data?.name},
           Confident you're doing well...!
 
@@ -521,22 +464,16 @@ exports.updateQuestionnaire = async (req, res) => {
 
           Best
           Team consciousleap.`,
-        attachments: [
-          {
-            filename: "Questionnaire Report.pdf",
-            content: buffer,
-            contentType: "application/pdf",
-          },
-        ],
-      });
-
-      await Login.updateOne({ _id: id }, { questionnaire });
-      res.send(questionnaire);
-    } catch (emailErr) {
-      console.error("Error sending email:", emailErr);
-      res.status(500).send("Error sending email");
-    }
+    attachments: [
+      {
+        filename: "Questionnaire Report.pdf",
+        content: pdfBuffer,
+        contentType: "application/pdf",
+      },
+    ],
   });
+
+  res.send(questionnaire);
 
   // await pdf
   //   .create(html, {
