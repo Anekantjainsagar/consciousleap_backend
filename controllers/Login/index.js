@@ -4,6 +4,7 @@ const Admin = require("../../model/adminSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const transporter = require("../../Routes/transporter");
+var pdf = require("html-pdf");
 
 exports.signUp = async (req, res) => {
   let { name, email, password, phone } = req.body;
@@ -231,145 +232,204 @@ exports.updateQuestionnaire = async (req, res) => {
 
   const user_data = await Login.findOne({ _id: id });
 
-  const info = await transporter.sendMail({
-    from: '"Consciousleap" otp@consciousleap.co',
-    to: user_data?.email,
-    subject: "Questionnaire data from consciousleap",
-    text: "Welcome to Consciousleap",
-    html: `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      body {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        margin: 0;
-        padding: 20px 0;
-        width: 85%;
-        margin: auto;
-      }
-      .element {
-        background: linear-gradient(to right, #4961ac, #f2685d, #4ec1ba);
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        width: fit-content;
-        font-weight: 500;
-        margin: auto;
-      }
-      .line {
-        height: 1px;
-        background-color: black;
-        margin: 15px 0;
-      }
-      .block {
-        background: linear-gradient(to right, #4961ac, #f2685d, #4ec1ba);
-        width: 100%;
-        padding: 2px;
-        border-radius: 100px;
-        margin-bottom: 10px;
-      }
-      .blockWhite {
-        padding: 10px;
-        border-radius: 100px;
-        background-color: white;
-        margin: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .blockWhite .roundCircleText {
-        position: relative;
-        font-size: 45px;
-        width: 130px;
-        height: 130px;
-        border: 2px solid #4961ac;
-        border-radius: 100%;
-      }
-      .blockWhite .roundCircle {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-      .blockWhite .roundCircle span {
-        font-size: 20px;
-      }
-      .roundText {
-        width: 72vw;
-        height: fit-content;
-      }
-      .blockWhite .roundText h4 {
-        font-size: 30px;
-        margin: 0;
-        font-weight: 400;
-        color: #4961ac;
-      }
-      .roundText p {
-        margin: 0;
-        font-size: 18px;
-        color: #777777;
-      }
-      .desc {
+  const html = `<html>
+  <body
+    style="
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      margin: 0;
+      padding: 20px 0;
+      width: 85%;
+      margin: auto;
+    "
+  >
+    <h1
+      class="element"
+      style="color: #4961ac; font-weight: 500; text-align: center"
+    >
+      Initial Analysis
+    </h1>
+    <div
+      class="line"
+      style="height: 1px; background-color: black; margin: 15px 0"
+    ></div>
+    <div>
+      <table
+        width="100%"
+        style="
+          padding: 10px;
+          border-radius: 100px;
+          border: 2px solid #4961ac;
+          margin-bottom: 20px;
+        "
+      >
+        <tr>
+          <th width="10%">
+            <img
+              src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560041/ary1p9pkmebmvlnvqf77.png"
+              alt="Image"
+              style="width: 20vw"
+            />
+          </th>
+          <th width="80%" style="margin-left: 15px">
+            <h4
+              style="
+                font-size: 24px;
+                margin: 0;
+                font-weight: 500;
+                color: #4961ac;
+                text-align: start;
+              "
+            >
+              Enviromental Mastery (${backendAnswers[0].value}%)
+            </h4>
+            <p
+              style="
+                margin: 0;
+                font-size: 14px;
+                font-weight: 400;
+                color: #777777;
+                text-align: start;
+              "
+            >
+              ${backendAnswers[0].text}
+            </p>
+          </th>
+        </tr>
+      </table>
+      <table
+        width="100%"
+        style="
+          padding: 10px;
+          border-radius: 100px;
+          border: 2px solid #4961ac;
+          margin-bottom: 20px;
+        "
+      >
+        <tr>
+          <th width="10%">
+            <img
+              src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560621/cfv0gfoggbshj05iwhhf.png"
+              alt="Image"
+              style="width: 20vw"
+            />
+          </th>
+          <th width="80%" style="margin-left: 15px">
+            <h4
+              style="
+                font-size: 24px;
+                margin: 0;
+                font-weight: 500;
+                color: #4961ac;
+                text-align: start;
+              "
+            >
+              Purpose In Life (${backendAnswers[1].value}%)
+            </h4>
+            <p
+              style="
+                margin: 0;
+                font-size: 14px;
+                font-weight: 400;
+                color: #777777;
+                text-align: start;
+              "
+            >
+              ${backendAnswers[1].text}
+            </p>
+          </th>
+        </tr>
+      </table>
+      <table
+        width="100%"
+        style="
+          padding: 10px;
+          border-radius: 100px;
+          border: 2px solid #4961ac;
+          margin-bottom: 20px;
+        "
+      >
+        <tr>
+          <th width="10%">
+            <img
+              src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560652/chwws3rmwauw34ay7zph.png"
+              alt="Image"
+              style="width: 20vw"
+            />
+          </th>
+          <th width="80%" style="margin-left: 15px">
+            <h4
+              style="
+                font-size: 24px;
+                margin: 0;
+                font-weight: 500;
+                color: #4961ac;
+                text-align: start;
+              "
+            >
+              Self Acceptance (${backendAnswers[2].value}%)
+            </h4>
+            <p
+              style="
+                margin: 0;
+                font-size: 14px;
+                font-weight: 400;
+                color: #777777;
+                text-align: start;
+              "
+            >
+              ${backendAnswers[2].text}
+            </p>
+          </th>
+        </tr>
+      </table>
+      <table
+        width="100%"
+        style="padding: 10px; border-radius: 100px; border: 2px solid #4961ac"
+      >
+        <tr>
+          <th width="10%">
+            <img
+              src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560677/xpixafdugyxxhphaby7y.png"
+              alt="Image"
+              style="width: 20vw"
+            />
+          </th>
+          <th width="80%" style="margin-left: 15px">
+            <h4
+              style="
+                font-size: 24px;
+                margin: 0;
+                font-weight: 500;
+                color: #4961ac;
+                text-align: start;
+              "
+            >
+              Relations with Others (${backendAnswers[3].value}%)
+            </h4>
+            <p
+              style="
+                margin: 0;
+                font-size: 14px;
+                font-weight: 400;
+                color: #777777;
+                text-align: start;
+              "
+            >
+              ${backendAnswers[3].text}
+            </p>
+          </th>
+        </tr>
+      </table>
+    </div>
+    <div
+      class="desc"
+      style="
         padding-top: 10px;
         text-align: center;
-        font-size: 16px;
+        font-size: 14px;
         color: #777777;
-      }
-    </style>
-  </head>
-  <body>
-    <h1 class="element">Initial Analysis</h1>
-    <div class="line"></div>
-    <div>
-      <div class="block">
-        <div class="blockWhite">
-          <div class="roundCircleText">
-            <div class="roundCircle">${backendAnswers[0].value}<span>%</span></div>
-          </div>
-          <div class="roundText">
-            <h4>Enviromental Mastery</h4>
-            <p>${backendAnswers[0].text}</p>
-          </div>
-        </div>
-      </div>
-      <div class="block">
-        <div class="blockWhite">
-          <div class="roundCircleText">
-            <div class="roundCircle">${backendAnswers[1].value}<span>%</span></div>
-          </div>
-          <div class="roundText">
-            <h4>Purpose In Life</h4>
-            <p>${backendAnswers[1].text}</p>
-          </div>
-        </div>
-      </div>
-      <div class="block">
-        <div class="blockWhite">
-          <div class="roundCircleText">
-            <div class="roundCircle">${backendAnswers[2].value}<span>%</span></div>
-          </div>
-          <div class="roundText">
-            <h4>Self Acceptance</h4>
-            <p>${backendAnswers[2].text}</p>
-          </div>
-        </div>
-      </div>
-      <div class="block">
-        <div class="blockWhite">
-          <div class="roundCircleText">
-            <div class="roundCircle">${backendAnswers[3].value}<span>%</span></div>
-          </div>
-          <div class="roundText">
-            <h4>Relations with Others</h4>
-            <p>${backendAnswers[3].text}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="desc">
+      "
+    >
       Disclaimer: This questionnaire is intended to provide a general assessment
       of mental health and should not be considered a substitute for
       professional evaluation or advice.The results of this questionnaire are
@@ -379,14 +439,47 @@ exports.updateQuestionnaire = async (req, res) => {
     </div>
   </body>
 </html>
-`,
-  });
+`;
 
-  Login.updateOne({ _id: id }, { questionnaire })
-    .then((response) => {
-      res.send(questionnaire);
+  await pdf
+    .create(html, {
+      childProcessOptions: {
+        env: {
+          OPENSSL_CONF: "/dev/null",
+        },
+      },
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .toFile(
+      `./${user_data?._id}Questionnaire Report.pdf`,
+      async function (err, resul) {
+        console.log(err);
+        if (resul.filename) {
+          const result = await transporter.sendMail({
+            to: user_data?.email,
+            subject: `Questionnaire report from consciousleap`,
+            text: `
+          Dear ${user_data?.name},
+          Confident you're doing well...!
+
+          If you have any questions or require further clarification, please do not hesitate to reach out to consciousleap.co.
+
+          Best
+          Team consciousleap.`,
+            attachments: [
+              {
+                filename: "Questionnaire Report.pdf",
+                path: `./${user_data?._id}Questionnaire Report.pdf`,
+              },
+            ],
+          });
+          Login.updateOne({ _id: id }, { questionnaire })
+            .then((response) => {
+              res.send(questionnaire);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      }
+    );
 };

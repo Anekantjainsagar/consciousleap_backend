@@ -13,6 +13,7 @@ const product = require("./Routes/product");
 const admin = require("./Routes/admin");
 const collab = require("./Routes/collab");
 
+const http = require("http");
 const https = require("https");
 const fs = require("fs");
 
@@ -29,7 +30,7 @@ const options = {
 };
 
 const httpsServer = https.createServer(options, app);
-// const httpsServer = https.createServer(app);
+// const httpsServer = http.createServer(app);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
