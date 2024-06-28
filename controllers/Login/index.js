@@ -148,6 +148,8 @@ exports.updateQuestionnaire = async (req, res) => {
   let { age, problem, answers } = req.body;
   let { id } = req;
 
+  console.log("Questionnaire analysis requested");
+
   let enviromental = parseInt(
     ((answers[0] + answers[1] + answers[2] + answers[3]) / 28) * 100
   );
@@ -229,6 +231,8 @@ exports.updateQuestionnaire = async (req, res) => {
   }
 
   let questionnaire = { age, problem, answers, backendAnswers };
+
+  console.log("Questionnaire analysis calculated");
 
   const user_data = await Login.findOne({ _id: id });
 
