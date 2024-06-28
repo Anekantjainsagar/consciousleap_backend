@@ -144,6 +144,64 @@ exports.deleteQuestionnaire = async function (req, res) {
     });
 };
 
+const generatePDFAndSendEmail = async (
+  html,
+  user_data,
+  id,
+  questionnaire,
+  res
+) => {
+  try {
+    const pdfPath = `./${user_data?._id}Questionnaire Report.pdf`;
+
+    pdf
+      .create(html, {
+        childProcessOptions: {
+          env: {
+            OPENSSL_CONF: "/dev/null",
+          },
+        },
+      })
+      .toFile(pdfPath, async (err, resul) => {
+        if (err) {
+          console.error("Error generating PDF:", err);
+          return res.status(500).send("Error generating PDF");
+        }
+
+        if (resul.filename) {
+          try {
+            const result = await transporter.sendMail({
+              to: user_data?.email,
+              subject: `Questionnaire report from consciousleap`,
+              text: `
+            Dear ${user_data?.name},
+            Confident you're doing well...!
+
+            If you have any questions or require further clarification, please do not hesitate to reach out to consciousleap.co.
+
+            Best
+            Team consciousleap.`,
+              attachments: [
+                {
+                  filename: "Questionnaire Report.pdf",
+                  path: pdfPath,
+                },
+              ],
+            });
+
+            res.send(questionnaire);
+          } catch (emailErr) {
+            console.error("Error sending email:", emailErr);
+            res.status(500).send("Error sending email");
+          }
+        }
+      });
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    res.status(500).send("Unexpected error");
+  }
+};
+
 exports.updateQuestionnaire = async (req, res) => {
   let { age, problem, answers } = req.body;
   let { id } = req;
@@ -234,6 +292,7 @@ exports.updateQuestionnaire = async (req, res) => {
 
   console.log("Questionnaire analysis calculated");
 
+  await Login.updateOne({ _id: id }, { questionnaire });
   const user_data = await Login.findOne({ _id: id });
 
   const html = `<html>
@@ -445,45 +504,5 @@ exports.updateQuestionnaire = async (req, res) => {
 </html>
 `;
 
-  await pdf
-    .create(html, {
-      childProcessOptions: {
-        env: {
-          OPENSSL_CONF: "/dev/null",
-        },
-      },
-    })
-    .toFile(
-      `./${user_data?._id}Questionnaire Report.pdf`,
-      async function (err, resul) {
-        console.log(err);
-        if (resul.filename) {
-          const result = await transporter.sendMail({
-            to: user_data?.email,
-            subject: `Questionnaire report from consciousleap`,
-            text: `
-          Dear ${user_data?.name},
-          Confident you're doing well...!
-
-          If you have any questions or require further clarification, please do not hesitate to reach out to consciousleap.co.
-
-          Best
-          Team consciousleap.`,
-            attachments: [
-              {
-                filename: "Questionnaire Report.pdf",
-                path: `./${user_data?._id}Questionnaire Report.pdf`,
-              },
-            ],
-          });
-          Login.updateOne({ _id: id }, { questionnaire })
-            .then((response) => {
-              res.send(questionnaire);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      }
-    );
+  generatePDFAndSendEmail(html, user_data, id, questionnaire, res);
 };
