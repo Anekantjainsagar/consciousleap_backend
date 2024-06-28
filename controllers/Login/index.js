@@ -447,20 +447,20 @@ exports.updateQuestionnaire = async (req, res) => {
 </html>
 `;
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--single-process",
-      "--no-zygote",
-      "--disable-gpu",
-    ],
-  });
-  const page = await browser.newPage();
-  await page.setContent(html);
-  const pdfBuffer = await page.pdf({ format: "A4" });
+  // const browser = await puppeteer.launch({
+  //   headless: true,
+  //   args: [
+  //     "--no-sandbox",
+  //     "--disable-setuid-sandbox",
+  //     "--disable-dev-shm-usage",
+  //     "--single-process",
+  //     "--no-zygote",
+  //     "--disable-gpu",
+  //   ],
+  // });
+  // const page = await browser.newPage();
+  // await page.setContent(html);
+  // const pdfBuffer = await page.pdf({ format: "A4" });
 
   await browser.close();
   const result = await transporter.sendMail({
@@ -474,13 +474,14 @@ exports.updateQuestionnaire = async (req, res) => {
 
           Best
           Team consciousleap.`,
-    attachments: [
-      {
-        filename: "Questionnaire Report.pdf",
-        content: pdfBuffer,
-        contentType: "application/pdf",
-      },
-    ],
+    // attachments: [
+    //   {
+    //     filename: "Questionnaire Report.pdf",
+    //     content: pdfBuffer,
+    //     contentType: "application/pdf",
+    //   },
+    // ],
+    html: html,
   });
   console.log(result);
   res.send(questionnaire);
