@@ -273,7 +273,7 @@ exports.updateQuestionnaire = async (req, res) => {
             <img
               src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560041/ary1p9pkmebmvlnvqf77.png"
               alt="Image"
-              style="width: 20vw"
+              style="width: 7vw"
             />
           </th>
           <th width="80%" style="margin-left: 15px">
@@ -316,7 +316,7 @@ exports.updateQuestionnaire = async (req, res) => {
             <img
               src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560621/cfv0gfoggbshj05iwhhf.png"
               alt="Image"
-              style="width: 20vw"
+              style="width: 7vw"
             />
           </th>
           <th width="80%" style="margin-left: 15px">
@@ -359,7 +359,7 @@ exports.updateQuestionnaire = async (req, res) => {
             <img
               src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560652/chwws3rmwauw34ay7zph.png"
               alt="Image"
-              style="width: 20vw"
+              style="width: 7vw"
             />
           </th>
           <th width="80%" style="margin-left: 15px">
@@ -397,7 +397,7 @@ exports.updateQuestionnaire = async (req, res) => {
             <img
               src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560677/xpixafdugyxxhphaby7y.png"
               alt="Image"
-              style="width: 20vw"
+              style="width: 7vw"
             />
           </th>
           <th width="80%" style="margin-left: 15px">
@@ -447,21 +447,6 @@ exports.updateQuestionnaire = async (req, res) => {
 </html>
 `;
 
-  // const browser = await puppeteer.launch({
-  //   headless: true,
-  //   args: [
-  //     "--no-sandbox",
-  //     "--disable-setuid-sandbox",
-  //     "--disable-dev-shm-usage",
-  //     "--single-process",
-  //     "--no-zygote",
-  //     "--disable-gpu",
-  //   ],
-  // });
-  // const page = await browser.newPage();
-  // await page.setContent(html);
-  // const pdfBuffer = await page.pdf({ format: "A4" });
-
   const result = await transporter.sendMail({
     to: user_data?.email,
     subject: `Questionnaire report from consciousleap`,
@@ -473,57 +458,8 @@ exports.updateQuestionnaire = async (req, res) => {
 
           Best
           Team consciousleap.`,
-    // attachments: [
-    //   {
-    //     filename: "Questionnaire Report.pdf",
-    //     content: pdfBuffer,
-    //     contentType: "application/pdf",
-    //   },
-    // ],
     html: html,
   });
   console.log(result);
   res.send(questionnaire);
-
-  // await pdf
-  //   .create(html, {
-  //     childProcessOptions: {
-  //       env: {
-  //         OPENSSL_CONF: "/dev/null",
-  //       },
-  //     },
-  //   })
-  //   .toFile(
-  //     `./${user_data?._id}Questionnaire Report.pdf`,
-  //     async function (err, resul) {
-  //       console.log(err);
-  //       if (resul.filename) {
-  //         const result = await transporter.sendMail({
-  //           to: user_data?.email,
-  //           subject: `Questionnaire report from consciousleap`,
-  //           text: `
-  //         Dear ${user_data?.name},
-  //         Confident you're doing well...!
-
-  //         If you have any questions or require further clarification, please do not hesitate to reach out to consciousleap.co.
-
-  //         Best
-  //         Team consciousleap.`,
-  //           attachments: [
-  //             {
-  //               filename: "Questionnaire Report.pdf",
-  //               path: `./${user_data?._id}Questionnaire Report.pdf`,
-  //             },
-  //           ],
-  //         });
-  //         Login.updateOne({ _id: id }, { questionnaire })
-  //           .then((response) => {
-  //             res.send(questionnaire);
-  //           })
-  //           .catch((err) => {
-  //             console.log(err);
-  //           });
-  //       }
-  //     }
-  //   );
 };
