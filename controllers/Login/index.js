@@ -462,7 +462,6 @@ exports.updateQuestionnaire = async (req, res) => {
   // await page.setContent(html);
   // const pdfBuffer = await page.pdf({ format: "A4" });
 
-  await browser.close();
   const result = await transporter.sendMail({
     to: user_data?.email,
     subject: `Questionnaire report from consciousleap`,
