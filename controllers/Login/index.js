@@ -238,209 +238,192 @@ exports.updateQuestionnaire = async (req, res) => {
 
   console.log("Questionnaire analysis calculated");
 
-  const html = `<html>
-  <body
-    style="
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-      margin: 0;
-      padding: 20px 0;
-      width: 85%;
-      margin: auto;
-    "
-  >
-    <h1
-      class="element"
-      style="color: #4961ac; font-weight: 500; text-align: center"
-    >
-      Initial Analysis
-    </h1>
-    <div
-      class="line"
-      style="height: 1px; background-color: black; margin: 15px 0"
-    ></div>
-    <div>
-      <table
-        width="100%"
-        style="
+  const html = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Analysis</title>
+    <style>
+      body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: 0;
+        padding: 20px 0;
+        width: 85%;
+        margin: auto;
+      }
+      .element {
+        color: #4961ac;
+        font-weight: 500;
+        text-align: center;
+      }
+      .line {
+        height: 1px;
+        background-color: black;
+        margin: 15px 0;
+      }
+      .table-container {
+        width: 100%;
+        padding: 10px;
+        border-radius: 100px;
+        border: 2px solid #4961ac;
+        margin-bottom: 20px;
+      }
+      .table-container img {
+        width: 7vw;
+      }
+      .content {
+        margin-left: 15px;
+      }
+      .content h4 {
+        font-size: 24px;
+        margin: 0;
+        font-weight: 500;
+        color: #4961ac;
+        text-align: start;
+      }
+      .content p {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 400;
+        color: #777777;
+        text-align: start;
+      }
+      .desc {
+        padding-top: 10px;
+        text-align: center;
+        font-size: 14px;
+        color: #777777;
+      }
+      @media (max-width: 768px) {
+        body {
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+          margin: 0;
+          padding: 5px 0;
+          width: 95%;
+          margin: auto;
+        }
+        .element {
+          color: #4961ac;
+          font-weight: 500;
+          text-align: center;
+        }
+        .line {
+          height: 1px;
+          background-color: black;
+          margin: 10px 0;
+        }
+        .table-container {
+          width: 100%;
           padding: 10px;
           border-radius: 100px;
           border: 2px solid #4961ac;
           margin-bottom: 20px;
-        "
-      >
+        }
+        .table-container img {
+          width: 15vw;
+        }
+        .content h4 {
+          font-size: 20px;
+          margin: 0;
+          font-weight: 500;
+          color: #4961ac;
+          text-align: start;
+        }
+        .content p {
+          margin: 0;
+          font-size: 12px;
+          font-weight: 400;
+          color: #777777;
+          text-align: start;
+        }
+        .desc {
+          padding-top: 10px;
+          text-align: center;
+          font-size: 12px;
+          color: #777777;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="element">Initial Analysis</h1>
+    <div class="line"></div>
+
+    <div class="table-container">
+      <table width="100%">
         <tr>
           <th width="10%">
             <img
               src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560041/ary1p9pkmebmvlnvqf77.png"
               alt="Image"
-              style="width: 7vw"
             />
           </th>
-          <th width="80%" style="margin-left: 15px">
-            <h4
-              style="
-                font-size: 24px;
-                margin: 0;
-                font-weight: 500;
-                color: #4961ac;
-                text-align: start;
-              "
-            >
-              Enviromental Mastery (${backendAnswers[0].value}%)
-            </h4>
-            <p
-              style="
-                margin: 0;
-                font-size: 14px;
-                font-weight: 400;
-                color: #777777;
-                text-align: start;
-              "
-            >
-              ${backendAnswers[0].text}
-            </p>
+          <th class="content">
+            <h4>Enviromental Mastery (${backendAnswers[0].value}%)</h4>
+            <p>${backendAnswers[0].text}</p>
           </th>
         </tr>
       </table>
-      <table
-        width="100%"
-        style="
-          padding: 10px;
-          border-radius: 100px;
-          border: 2px solid #4961ac;
-          margin-bottom: 20px;
-        "
-      >
+    </div>
+
+    <div class="table-container">
+      <table width="100%">
         <tr>
           <th width="10%">
             <img
               src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560621/cfv0gfoggbshj05iwhhf.png"
               alt="Image"
-              style="width: 7vw"
             />
           </th>
-          <th width="80%" style="margin-left: 15px">
-            <h4
-              style="
-                font-size: 24px;
-                margin: 0;
-                font-weight: 500;
-                color: #4961ac;
-                text-align: start;
-              "
-            >
-              Purpose In Life (${backendAnswers[1].value}%)
-            </h4>
-            <p
-              style="
-                margin: 0;
-                font-size: 14px;
-                font-weight: 400;
-                color: #777777;
-                text-align: start;
-              "
-            >
-              ${backendAnswers[1].text}
-            </p>
+          <th class="content">
+            <h4>Purpose In Life (${backendAnswers[1].value}%)</h4>
+            <p>${backendAnswers[1].text}</p>
           </th>
         </tr>
       </table>
-      <table
-        width="100%"
-        style="
-          padding: 10px;
-          border-radius: 100px;
-          border: 2px solid #4961ac;
-          margin-bottom: 20px;
-        "
-      >
+    </div>
+
+    <div class="table-container">
+      <table width="100%">
         <tr>
           <th width="10%">
             <img
               src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560652/chwws3rmwauw34ay7zph.png"
               alt="Image"
-              style="width: 7vw"
             />
           </th>
-          <th width="80%" style="margin-left: 15px">
-            <h4
-              style="
-                font-size: 24px;
-                margin: 0;
-                font-weight: 500;
-                color: #4961ac;
-                text-align: start;
-              "
-            >
-              Self Acceptance (${backendAnswers[2].value}%)
-            </h4>
-            <p
-              style="
-                margin: 0;
-                font-size: 14px;
-                font-weight: 400;
-                color: #777777;
-                text-align: start;
-              "
-            >
-              ${backendAnswers[2].text}
-            </p>
+          <th class="content">
+            <h4>Self Acceptance (${backendAnswers[2].value}%)</h4>
+            <p>${backendAnswers[2].text}</p>
           </th>
         </tr>
       </table>
-      <table
-        width="100%"
-        style="padding: 10px; border-radius: 100px; border: 2px solid #4961ac"
-      >
+    </div>
+
+    <div class="table-container">
+      <table width="100%">
         <tr>
           <th width="10%">
             <img
               src="https://res.cloudinary.com/dpbsogbtr/image/upload/v1719560677/xpixafdugyxxhphaby7y.png"
               alt="Image"
-              style="width: 7vw"
             />
           </th>
-          <th width="80%" style="margin-left: 15px">
-            <h4
-              style="
-                font-size: 24px;
-                margin: 0;
-                font-weight: 500;
-                color: #4961ac;
-                text-align: start;
-              "
-            >
-              Relations with Others (${backendAnswers[3].value}%)
-            </h4>
-            <p
-              style="
-                margin: 0;
-                font-size: 14px;
-                font-weight: 400;
-                color: #777777;
-                text-align: start;
-              "
-            >
-              ${backendAnswers[3].text}
-            </p>
+          <th class="content">
+            <h4>Relations with Others (${backendAnswers[3].value}%)</h4>
+            <p>${backendAnswers[3].text}</p>
           </th>
         </tr>
       </table>
     </div>
-    <div
-      class="desc"
-      style="
-        padding-top: 10px;
-        text-align: center;
-        font-size: 14px;
-        color: #777777;
-      "
-    >
-      Disclaimer: This questionnaire is intended to provide a general assessment
+
+    <div class="desc">
+      Disclaimer: This questionnaire is intended to provide a general assessment
       of mental health and should not be considered a substitute for
-      professional evaluation or advice.The results of this questionnaire are
+      professional evaluation or advice. The results of this questionnaire are
       based solely on the provided responses and should be interpreted with
-      caution.It is important to consult with a qualified mental health
+      caution. It is important to consult with a qualified mental health
       professional for assessment and personalized guidance.
     </div>
   </body>
