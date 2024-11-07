@@ -1,7 +1,6 @@
 const otpGenerator = require("otp-generator");
 const Login = require("../../model/loginSchema");
 const transporter = require("../../Routes/transporter");
-const emailjs = require("@emailjs/nodejs");
 
 exports.sendMail = async (req, res) => {
   let email = req.body.email;

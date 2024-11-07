@@ -1,10 +1,10 @@
 const nodemailer = require("nodemailer");
-const otpGenerator = require("otp-generator");
 const Therapist = require("../../model/therapistSchema");
 
 exports.sendMail = async (req, res) => {
   let email = req.body.email;
   email = email.toLowerCase();
+  const { name, phone, experience, desc, resume } = req.body;
 
   let data = await Therapist.findOne({ email });
 
@@ -20,16 +20,10 @@ exports.sendMail = async (req, res) => {
     });
 
     if (email) {
-      const otp = otpGenerator.generate(4, {
-        upperCaseAlphabets: false,
-        specialChars: false,
-        digits: true,
-        lowerCaseAlphabets: false,
-      });
       const result = await transporter.sendMail({
-        to: email,
-        subject: "Verify you login",
-        html: `<p>Hello user,</p><p>Thank you for choosing consciousleap, Use this OTP to complete your Sign Up procedure and verify your account on consciousleap </p><p>Remember, Never share this OTP with anyone, not even if Tap Karo asks you..</p><p>${otp}</p><p>Regards,</p><p>Team consciousleap</p>`,
+        to: ["hr@consciousleap.co", "anekant.jain.consciousleap@gmail.com"],
+        subject: "New Therapist Application",
+        html: `<p>Hello Hr,</p><p>We've got a new therapist application at consciousleap </p><p>Name: ${name}</p><p>Phone Number: ${phone}</p><p>Email ID: ${email}</p><p>Experience in Years: ${experience}</p><p>Experience Description: ${desc}</p><p>Resume Link: ${resume}</p><p>Regards,</p><p>Team consciousleap</p>`,
       });
 
       if (
@@ -37,8 +31,7 @@ exports.sendMail = async (req, res) => {
         result.accepted.includes(modifiedMail)
       ) {
         res.status(200).send({
-          data: "OTP sended successfully via Email. If not receiving email check spam folder",
-          otp: otp,
+          data: "Application Sent",
           success: true,
         });
       } else {
