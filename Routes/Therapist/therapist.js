@@ -49,12 +49,7 @@ therapist.post(`/review`, validateSingin, reviewTherapist);
 // Login signup routes
 therapist.post("/signup", validateSignUp, userValidationResult, signUp);
 
-therapist.use(
-  "/otp-verification",
-  validateSignUp,
-  userValidationResult,
-  sendMail
-);
+therapist.use("/otp-verification", sendMail);
 
 therapist.post("/password-reset", sendUrl);
 therapist.get("/password-reset/:id/:token", verifyUrl);

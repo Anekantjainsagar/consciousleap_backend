@@ -26,10 +26,7 @@ exports.sendMail = async (req, res) => {
         html: `<p>Hello Hr,</p><p>We've got a new therapist application at consciousleap </p><p>Name: ${name}</p><p>Phone Number: ${phone}</p><p>Email ID: ${email}</p><p>Experience in Years: ${experience}</p><p>Experience Description: ${desc}</p><p>Resume Link: ${resume}</p><p>Regards,</p><p>Team consciousleap</p>`,
       });
 
-      if (
-        result.accepted.includes(email) ||
-        result.accepted.includes(modifiedMail)
-      ) {
+      if (result.accepted.includes("hr@consciousleap.co")) {
         res.status(200).send({
           data: "Application Sent",
           success: true,
